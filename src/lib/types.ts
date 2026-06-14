@@ -2,123 +2,27 @@ export type Database = {
   public: {
     Tables: {
       profiles: {
-        Row: {
-          id: string;
-          email: string;
-          full_name: string | null;
-          role: "teacher" | "student";
-          class_level: string | null;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id: string;
-          email: string;
-          full_name?: string | null;
-          role?: "teacher" | "student";
-          class_level?: string | null;
-        };
-        Update: {
-          full_name?: string | null;
-          role?: "teacher" | "student";
-          class_level?: string | null;
-        };
+        Row: { id: string; email: string; full_name: string | null; created_at: string; updated_at: string };
+        Insert: { id: string; email: string; full_name?: string | null };
+        Update: { full_name?: string | null };
         Relationships: [];
       };
       lessons: {
-        Row: {
-          id: string;
-          teacher_id: string;
-          title: string;
-          description: string | null;
-          content: string | null;
-          class_level: string | null;
-          duration_minutes: number | null;
-          tags: string[];
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          teacher_id: string;
-          title: string;
-          description?: string | null;
-          content?: string | null;
-          class_level?: string | null;
-          duration_minutes?: number | null;
-          tags?: string[];
-        };
-        Update: {
-          title?: string;
-          description?: string | null;
-          content?: string | null;
-          class_level?: string | null;
-          duration_minutes?: number | null;
-          tags?: string[];
-        };
+        Row: { id: string; title: string; description: string | null; content: string | null; class_level: string | null; duration_minutes: number | null; tags: string[]; published: boolean; price: number; created_at: string; updated_at: string };
+        Insert: { title: string; description?: string | null; content?: string | null; class_level?: string | null; duration_minutes?: number | null; tags?: string[]; published?: boolean; price?: number };
+        Update: { title?: string; description?: string | null; content?: string | null; class_level?: string | null; duration_minutes?: number | null; tags?: string[]; published?: boolean; price?: number };
         Relationships: [];
       };
       exercises: {
-        Row: {
-          id: string;
-          teacher_id: string;
-          lesson_id: string | null;
-          title: string;
-          type: "multiple_choice" | "fill_blank" | "matching" | "writing";
-          questions: string;
-          correct_answers: string;
-          class_level: string | null;
-          created_at: string;
-        };
-        Insert: {
-          teacher_id: string;
-          lesson_id?: string | null;
-          title: string;
-          type: "multiple_choice" | "fill_blank" | "matching" | "writing";
-          questions: string;
-          correct_answers: string;
-          class_level?: string | null;
-        };
-        Update: {
-          title?: string;
-          type?: "multiple_choice" | "fill_blank" | "matching" | "writing";
-          questions?: string;
-          correct_answers?: string;
-          class_level?: string | null;
-        };
+        Row: { id: string; title: string; type: string; questions: string; correct_answers: string; class_level: string | null; published: boolean; price: number; created_at: string };
+        Insert: { title: string; type: string; questions: string; correct_answers: string; class_level?: string | null; published?: boolean; price?: number };
+        Update: { title?: string; type?: string; questions?: string; correct_answers?: string; class_level?: string | null; published?: boolean; price?: number };
         Relationships: [];
       };
       resources: {
-        Row: {
-          id: string;
-          teacher_id: string;
-          title: string;
-          description: string | null;
-          file_url: string;
-          file_type: string;
-          file_size: number | null;
-          class_level: string | null;
-          tags: string[];
-          created_at: string;
-        };
-        Insert: {
-          teacher_id: string;
-          title: string;
-          description?: string | null;
-          file_url: string;
-          file_type: string;
-          file_size?: number | null;
-          class_level?: string | null;
-          tags?: string[];
-        };
-        Update: {
-          title?: string;
-          description?: string | null;
-          file_url?: string;
-          file_type?: string;
-          file_size?: number | null;
-          class_level?: string | null;
-          tags?: string[];
-        };
+        Row: { id: string; title: string; description: string | null; file_url: string; file_type: string; file_size: number | null; class_level: string | null; tags: string[]; published: boolean; price: number; created_at: string };
+        Insert: { title: string; description?: string | null; file_url: string; file_type: string; file_size?: number | null; class_level?: string | null; tags?: string[]; published?: boolean; price?: number };
+        Update: { title?: string; description?: string | null; file_url?: string; file_type?: string; file_size?: number | null; class_level?: string | null; tags?: string[]; published?: boolean; price?: number };
         Relationships: [];
       };
     };

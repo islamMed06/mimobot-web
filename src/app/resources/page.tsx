@@ -1,98 +1,61 @@
-"use client";
+import PublicNavbar from "@/components/PublicNavbar";
+import Footer from "@/components/Footer";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase";
-import type { Resource } from "@/lib/types";
+export default async function ResourcesPage() {
+  const cookieStore = await cookies();
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { cookies: { getAll: () => cookieStore.getAll(), setAll: () => {} } }
+  );
 
-export default function ResourcesPage() {
-  const supabase = createClient();
-  const [resources, setResources] = useState<Resource[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const load = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-
-      const { data } = await supabase
-        .from("resources")
-        .select("*")
-        .eq("teacher_id", user.id)
-        .order("created_at", { ascending: false });
-
-      if (data) setResources(data);
-      setLoading(false);
-    };
-    load();
-  }, []);
-
-  const handleDelete = async (id: string) => {
-    await supabase.from("resources").delete().eq("id", id);
-    setResources(resources.filter((r) => r.id !== id));
-  };
-
-  const typeIcon = (type: string) => {
-    if (type.startsWith("image")) return "🖼";
-    if (type === "application/pdf") return "📄";
-    return "📁";
-  };
+  const { data: resources } = await supabase
+    .from("resources")
+    .select("*")
+    .eq("published", true)
+    .order("created_at", { ascending: false });
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-neutral-900">Ressources</h1>
-        <p className="text-neutral-500 mt-1">Fiches, examens et supports de cours</p>
-      </div>
+      <PublicNavbar />
+      <main className="max-w-6xl mx-auto px-4 py-12">
+        <h1 className="text-3xl font-bold mb-2">Ressources</h1>
+        <p className="text-gray-500 mb-8">Fiches, documents et supports à télécharger.</p>
 
-      {loading ? (
-        <p className="text-neutral-500">Chargement...</p>
-      ) : resources.length === 0 ? (
-        <div className="bg-white rounded-xl border border-neutral-200 p-12 text-center">
-          <p className="text-neutral-500">Aucune ressource pour le moment</p>
-        </div>
-      ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {resources.map((res) => (
-            <div key={res.id} className="bg-white rounded-xl border border-neutral-200 p-5 hover:shadow-md transition-shadow">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-2xl">{typeIcon(res.file_type)}</span>
+        {(!resources || resources.length === 0) && (
+          <p className="text-gray-400 py-12 text-center">Aucune ressource publiée pour le moment.</p>
+        )}
+
+        <div className="grid gap-4">
+          {resources?.map((r) => (
+            <div key={r.id} className="border border-gray-200 rounded-xl p-5 hover:border-gray-300 transition-colors">
+              <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h3 className="font-semibold text-neutral-900">{res.title}</h3>
-                  {res.description && (
-                    <p className="text-xs text-neutral-500">{res.description}</p>
-                  )}
+                  <h2 className="font-semibold text-lg">{r.title}</h2>
+                  {r.description && <p className="text-sm text-gray-500 mt-1">{r.description}</p>}
+                  <div className="flex items-center gap-3 mt-3 text-xs text-gray-400">
+                    <span className="uppercase">{r.file_type}</span>
+                    {r.file_size && <span>{(r.file_size / 1024).toFixed(0)} Ko</span>}
+                    <span>{r.class_level}</span>
+                    {r.price > 0 ? <span className="text-amber-600">{r.price} DA</span> : <span className="text-green-600">Gratuit</span>}
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center justify-between pt-3 border-t border-neutral-100">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-neutral-400">{res.file_type.split("/").pop()?.toUpperCase()}</span>
-                  {res.file_size && (
-                    <span className="text-xs text-neutral-400">
-                      {(res.file_size / 1024).toFixed(0)} KB
-                    </span>
-                  )}
-                </div>
-                <div className="flex items-center gap-2">
-                  <a
-                    href={res.file_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-primary hover:underline"
-                  >
-                    Ouvrir
-                  </a>
-                  <button
-                    onClick={() => handleDelete(res.id)}
-                    className="text-xs text-red-500 hover:text-red-700"
-                  >
-                    Supprimer
-                  </button>
-                </div>
+                <a
+                  href={r.file_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 px-4 py-2 bg-gray-900 text-white text-sm rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                  Télécharger
+                </a>
               </div>
             </div>
           ))}
         </div>
-      )}
+      </main>
+      <Footer />
     </div>
   );
 }

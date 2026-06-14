@@ -29,21 +29,12 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const protectedPaths = ["/dashboard", "/lessons", "/exercises", "/resources", "/profile"];
-  const isProtected = protectedPaths.some((p) =>
-    request.nextUrl.pathname.startsWith(p)
-  );
+  const isAdmin = request.nextUrl.pathname.startsWith("/admin");
 
-  if (!user && isProtected) {
+  if (!user && isAdmin) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("redirect", request.nextUrl.pathname);
-    return NextResponse.redirect(url);
-  }
-
-  if (user && ["/login", "/register"].includes(request.nextUrl.pathname)) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/dashboard";
     return NextResponse.redirect(url);
   }
 
