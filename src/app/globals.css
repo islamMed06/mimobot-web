@@ -21,7 +21,7 @@ body { background-color: var(--color-cream); }
 
 @layer components {
   .sticker {
-    background: var(--color-cream);
+    background: white;
     border: 3px solid #1A1A2E;
     box-shadow: 6px 6px 0px #1A1A2E;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -96,7 +96,7 @@ body { background-color: var(--color-cream); }
   font-family: 'Baloo 2', cursive;
   border: 3px solid #1A1A2E;
   color: #1A1A2E;
-  background: var(--color-cream);
+  background: white;
   font-weight: 700;
   padding: 12px 32px;
   border-radius: 50px;
@@ -125,7 +125,6 @@ body { background-color: var(--color-cream); }
   border-radius: 14px;
   transition: all 0.2s ease;
   font-family: 'Inter', sans-serif;
-  background: var(--color-cream);
 }
 .form-input:focus {
   outline: none;

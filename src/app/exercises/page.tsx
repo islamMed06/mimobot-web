@@ -85,7 +85,7 @@ export default async function ExercisesPage({ searchParams }: { searchParams: Pr
               className={`font-display font-bold text-sm px-5 py-2.5 rounded-full border-2 border-ink transition-all no-underline ${
                 params.level === l.id
                   ? "bg-ink text-white shadow-[3px_3px_0px_#FFC857]"
-                  : "bg-cream text-ink hover:shadow-[3px_3px_0px_#1A1A2E] hover:-translate-x-0.5 hover:-translate-y-0.5"
+                  : "bg-white text-ink hover:shadow-[3px_3px_0px_#1A1A2E] hover:-translate-x-0.5 hover:-translate-y-0.5"
               }`}
             >
               {l.icon} {l.label}
@@ -103,7 +103,7 @@ export default async function ExercisesPage({ searchParams }: { searchParams: Pr
 
         <div className="grid gap-5 max-w-3xl mx-auto">
           {exercises?.map((e, i) => (
-            <div key={e.id} className={`sticker rounded-2xl p-6 ${["bg-mint-light","bg-blue-light","bg-coral-light","bg-sun-light"][i % 4]} ${i % 2 === 0 ? "tilt-1" : "tilt-2"}`}>
+            <div key={e.id} className={`sticker rounded-2xl p-6 ${i % 2 === 0 ? "tilt-1" : "tilt-2"}`}>
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h2 className="font-display font-bold text-lg text-ink">{e.title}</h2>

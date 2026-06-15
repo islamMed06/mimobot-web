@@ -275,7 +275,7 @@ export default function HomePage() {
       {/* ===================== ABOUT ===================== */}
       <section
         id="apropos"
-        className="py-20 md:py-28 bg-cream relative border-y-3 border-ink"
+        className="py-20 md:py-28 bg-white relative border-y-3 border-ink"
       >
         <div className="blob bg-sun w-72 h-72 absolute -top-20 -right-20 opacity-40"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -332,7 +332,7 @@ export default function HomePage() {
               </p>
 
               <div className="grid grid-cols-3 gap-4 pt-4">
-                <div className="text-center sticker bg-coral-light rounded-2xl py-4 tilt-1">
+                <div className="text-center sticker rounded-2xl py-4 tilt-1">
                   <p className="font-display text-2xl font-extrabold text-coral">
                     200+
                   </p>
@@ -340,7 +340,7 @@ export default function HomePage() {
                     Élèves formés
                   </p>
                 </div>
-                <div className="text-center sticker bg-blue-light rounded-2xl py-4 tilt-2">
+                <div className="text-center sticker rounded-2xl py-4 tilt-2">
                   <p className="font-display text-2xl font-extrabold text-blue">
                     5+
                   </p>
@@ -348,7 +348,7 @@ export default function HomePage() {
                     Années d&apos;exp.
                   </p>
                 </div>
-                <div className="text-center sticker bg-mint-light rounded-2xl py-4 tilt-3">
+                <div className="text-center sticker rounded-2xl py-4 tilt-3">
                   <p className="font-display text-2xl font-extrabold text-mint">
                     95%
                   </p>
@@ -383,7 +383,7 @@ export default function HomePage() {
             ].map((item, i) => (
               <div
                 key={item.title}
-                className={`sticker ${["bg-coral-light","bg-sun-light","bg-mint-light"][i]} tilt-${i + 1} rounded-2xl p-8 text-center`}
+                className={`sticker tilt-${i + 1} rounded-2xl p-8 text-center`}
               >
                 <div
                   className={`w-14 h-14 rounded-2xl ${item.color} border-3 border-ink text-white flex items-center justify-center text-2xl mx-auto mb-4`}
@@ -428,7 +428,9 @@ export default function HomePage() {
                 label: "1ère AM",
                 icon: "fa-solid fa-seedling",
                 color: "bg-mint",
+                iconColor: "text-ink",
                 bg: "bg-mint-light",
+                btnClass: "bg-white hover:bg-mint",
                 count: "6 leçons",
                 desc: "Alphabet, salutations, couleurs, nombres, famille, animaux.",
                 resources: [
@@ -443,7 +445,9 @@ export default function HomePage() {
                 label: "2ème AM",
                 icon: "fa-solid fa-book",
                 color: "bg-blue",
+                iconColor: "text-white",
                 bg: "bg-blue-light",
+                btnClass: "bg-white hover:bg-blue hover:text-white",
                 count: "8 leçons",
                 desc: "Present Simple, articles, prépositions, décrire une personne, routines.",
                 resources: [
@@ -458,7 +462,9 @@ export default function HomePage() {
                 label: "3ème AM",
                 icon: "fa-solid fa-brain",
                 color: "bg-coral",
+                iconColor: "text-white",
                 bg: "bg-coral-light",
+                btnClass: "bg-white hover:bg-coral hover:text-white",
                 count: "10 leçons",
                 desc: "Past Simple, comparatifs, météo, santé, recettes, biographies.",
                 resources: [
@@ -473,7 +479,9 @@ export default function HomePage() {
                 label: "4ème AM",
                 icon: "fa-solid fa-trophy",
                 color: "bg-ink",
+                iconColor: "text-sun",
                 bg: "bg-sun",
+                btnClass: "bg-ink text-cream hover:bg-coral",
                 count: "12 leçons",
                 desc: "Révision générale, rédaction, compréhension écrite, annales BEM.",
                 special: "BEM 🏆",
@@ -495,7 +503,7 @@ export default function HomePage() {
                   </div>
                 )}
                 <div
-                  className={`w-12 h-12 rounded-xl ${niveau.color} border-3 border-ink text-white flex items-center justify-center text-xl mb-4 ${i % 2 === 0 ? "-rotate-3" : "rotate-3"}`}
+                  className={`w-12 h-12 rounded-xl ${niveau.color} border-3 border-ink ${niveau.iconColor} flex items-center justify-center text-xl mb-4 ${i % 2 === 0 ? "-rotate-3" : "rotate-3"}`}
                 >
                   <i className={niveau.icon}></i>
                 </div>
@@ -521,7 +529,7 @@ export default function HomePage() {
                 </ul>
                 <Link
                   href={`/lessons?level=${niveau.level}`}
-                  className={`mt-5 w-full font-display text-sm font-bold text-ink py-2.5 rounded-xl border-3 border-ink bg-cream hover:bg-ink hover:text-cream transition-all flex items-center justify-center gap-1 no-underline`}
+                  className={`mt-5 w-full font-display text-sm font-bold ${niveau.btnClass} py-2.5 rounded-xl border-3 border-ink transition-all flex items-center justify-center gap-1 no-underline`}
                 >
                   Voir tout <i className="fa-solid fa-arrow-right text-xs"></i>
                 </Link>
@@ -715,7 +723,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">
-            <div className="sticker rounded-2xl p-8 bg-cream">
+            <div className="sticker rounded-2xl p-8 bg-white">
               <form id="contact-form" className="space-y-6">
                 <div>
                   <label className="block text-sm font-display font-bold text-ink mb-1.5">
@@ -749,7 +757,7 @@ export default function HomePage() {
                   </label>
                   <select
                     name="subject"
-                    className="form-input w-full px-4 py-3 text-sm"
+                    className="form-input w-full px-4 py-3 text-sm bg-white"
                   >
                     <option value="">Choisissez un sujet...</option>
                     <option>Demande d&apos;information sur les cours</option>
@@ -818,7 +826,7 @@ export default function HomePage() {
                     },
                   ].map((item) => (
                     <div key={item.label} className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-cream border-2 border-ink text-ink flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-white border-2 border-ink text-ink flex items-center justify-center flex-shrink-0">
                         <i className={item.icon}></i>
                       </div>
                       <div>
@@ -832,7 +840,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="sticker rounded-2xl p-8 bg-cream">
+              <div className="sticker rounded-2xl p-8 bg-white">
                 <h3 className="font-display text-xl font-bold text-ink mb-6">
                   <i className="fa-solid fa-share-nodes text-coral mr-2"></i>{" "}
                   Suivez-moi
@@ -920,7 +928,7 @@ export default function HomePage() {
                 <input
                   type="email"
                   placeholder="Votre email"
-                  className="flex-1 rounded-xl px-4 py-2.5 text-sm text-ink border-2 border-cream/20 focus:outline-none focus:border-sun bg-cream"
+                  className="flex-1 rounded-xl px-4 py-2.5 text-sm text-ink border-2 border-cream/20 focus:outline-none focus:border-sun"
                 />
                 <button
                   type="submit"
