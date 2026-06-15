@@ -1,19 +1,34 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Baloo_2 } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const baloo2 = Baloo_2({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+  weight: ["500", "600", "700", "800"],
+});
 
 export const metadata: Metadata = {
-  title: "MimoBot — Kenza Mimoune",
-  description: "Ressources pédagogiques d'anglais pour le CEM — Leçons, exercices et fiches par Kenza Mimoune",
+  title: "Mimoune Kenza – English Teacher",
+  description:
+    "Ressources pédagogiques d'anglais pour le CEM — Leçons, exercices et fiches par Kenza Mimoune",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="fr">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-gray-900`}>
+    <html lang="fr" className={`${inter.variable} ${baloo2.variable}`}>
+      <body className="font-body text-ink bg-cream overflow-x-hidden">
         {children}
       </body>
     </html>
