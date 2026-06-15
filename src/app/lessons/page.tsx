@@ -99,7 +99,7 @@ export default async function LessonsPage({ searchParams }: { searchParams: Prom
           {lessons?.map((l, i) => (
             <div
               key={l.id}
-              className={`sticker rounded-2xl p-6 ${i % 2 === 0 ? "tilt-1" : "tilt-2"}`}
+              className={`sticker rounded-2xl p-6 ${["bg-mint-light","bg-blue-light","bg-coral-light","bg-sun-light"][i % 4]} ${i % 2 === 0 ? "tilt-1" : "tilt-2"}`}
             >
               <div className="flex items-start justify-between gap-4">
                 <div>

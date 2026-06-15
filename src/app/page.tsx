@@ -332,7 +332,7 @@ export default function HomePage() {
               </p>
 
               <div className="grid grid-cols-3 gap-4 pt-4">
-                <div className="text-center sticker rounded-2xl py-4 tilt-1">
+                <div className="text-center sticker bg-coral-light rounded-2xl py-4 tilt-1">
                   <p className="font-display text-2xl font-extrabold text-coral">
                     200+
                   </p>
@@ -340,7 +340,7 @@ export default function HomePage() {
                     Élèves formés
                   </p>
                 </div>
-                <div className="text-center sticker rounded-2xl py-4 tilt-2">
+                <div className="text-center sticker bg-blue-light rounded-2xl py-4 tilt-2">
                   <p className="font-display text-2xl font-extrabold text-blue">
                     5+
                   </p>
@@ -348,7 +348,7 @@ export default function HomePage() {
                     Années d&apos;exp.
                   </p>
                 </div>
-                <div className="text-center sticker rounded-2xl py-4 tilt-3">
+                <div className="text-center sticker bg-mint-light rounded-2xl py-4 tilt-3">
                   <p className="font-display text-2xl font-extrabold text-mint">
                     95%
                   </p>
@@ -383,7 +383,7 @@ export default function HomePage() {
             ].map((item, i) => (
               <div
                 key={item.title}
-                className={`sticker tilt-${i + 1} rounded-2xl p-8 text-center`}
+                className={`sticker ${["bg-coral-light","bg-sun-light","bg-mint-light"][i]} tilt-${i + 1} rounded-2xl p-8 text-center`}
               >
                 <div
                   className={`w-14 h-14 rounded-2xl ${item.color} border-3 border-ink text-white flex items-center justify-center text-2xl mx-auto mb-4`}

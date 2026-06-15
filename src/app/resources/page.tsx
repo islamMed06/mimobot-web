@@ -89,7 +89,7 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Pr
 
         <div className="grid gap-5 max-w-3xl mx-auto">
           {resources?.map((r, i) => (
-            <div key={r.id} className={`sticker rounded-2xl p-6 ${i % 2 === 0 ? "tilt-1" : "tilt-2"}`}>
+            <div key={r.id} className={`sticker rounded-2xl p-6 ${["bg-mint-light","bg-blue-light","bg-coral-light","bg-sun-light"][i % 4]} ${i % 2 === 0 ? "tilt-1" : "tilt-2"}`}>
               <div className="flex items-center justify-between gap-4">
                 <div className="min-w-0">
                   <h2 className="font-display font-bold text-lg text-ink truncate">{r.title}</h2>
