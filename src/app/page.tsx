@@ -749,7 +749,7 @@ export default function HomePage() {
                   </label>
                   <select
                     name="subject"
-                    className="form-input w-full px-4 py-3 text-sm bg-white"
+                    className="form-input w-full px-4 py-3 text-sm"
                   >
                     <option value="">Choisissez un sujet...</option>
                     <option>Demande d&apos;information sur les cours</option>
@@ -818,7 +818,7 @@ export default function HomePage() {
                     },
                   ].map((item) => (
                     <div key={item.label} className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-white border-2 border-ink text-ink flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-cream border-2 border-ink text-ink flex items-center justify-center flex-shrink-0">
                         <i className={item.icon}></i>
                       </div>
                       <div>
@@ -920,7 +920,7 @@ export default function HomePage() {
                 <input
                   type="email"
                   placeholder="Votre email"
-                  className="flex-1 rounded-xl px-4 py-2.5 text-sm text-ink border-2 border-cream/20 focus:outline-none focus:border-sun"
+                  className="flex-1 rounded-xl px-4 py-2.5 text-sm text-ink border-2 border-cream/20 focus:outline-none focus:border-sun bg-cream"
                 />
                 <button
                   type="submit"

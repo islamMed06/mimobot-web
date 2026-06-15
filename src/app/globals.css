@@ -19,6 +19,19 @@
 html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 body { background-color: var(--color-cream); }
 
+@layer components {
+  .sticker {
+    background: var(--color-cream);
+    border: 3px solid #1A1A2E;
+    box-shadow: 6px 6px 0px #1A1A2E;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .sticker:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0px #1A1A2E;
+  }
+}
+
 /* BLOBS */
 .blob {
   position: absolute;
@@ -26,17 +39,6 @@ body { background-color: var(--color-cream); }
   z-index: 0;
 }
 
-/* STICKER */
-.sticker {
-  border: 3px solid #1A1A2E;
-  box-shadow: 6px 6px 0px #1A1A2E;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  background: var(--color-cream);
-}
-.sticker:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 9px 9px 0px #1A1A2E;
-}
 .tilt-1 { transform: rotate(-2deg); }
 .tilt-2 { transform: rotate(1.5deg); }
 .tilt-3 { transform: rotate(-1deg); }
@@ -94,7 +96,7 @@ body { background-color: var(--color-cream); }
   font-family: 'Baloo 2', cursive;
   border: 3px solid #1A1A2E;
   color: #1A1A2E;
-  background: white;
+  background: var(--color-cream);
   font-weight: 700;
   padding: 12px 32px;
   border-radius: 50px;
@@ -123,6 +125,7 @@ body { background-color: var(--color-cream); }
   border-radius: 14px;
   transition: all 0.2s ease;
   font-family: 'Inter', sans-serif;
+  background: var(--color-cream);
 }
 .form-input:focus {
   outline: none;
