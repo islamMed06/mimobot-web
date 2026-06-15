@@ -31,7 +31,7 @@ body { background-color: var(--color-cream); }
   border: 3px solid #1A1A2E;
   box-shadow: 6px 6px 0px #1A1A2E;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  background: white;
+  background: var(--color-cream);
 }
 .sticker:hover {
   transform: translate(-3px, -3px);

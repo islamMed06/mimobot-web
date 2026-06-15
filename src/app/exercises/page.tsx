@@ -59,7 +59,9 @@ export default async function ExercisesPage({ searchParams }: { searchParams: Pr
         </div>
       </header>
 
-      <section className="pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="blob bg-sun w-72 h-72 -top-10 -right-10 opacity-50 fixed"></div>
+      <div className="blob bg-mint-light w-56 h-56 -bottom-10 -left-10 opacity-50 fixed"></div>
+      <section className="pt-32 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center mb-12">
           <h1 className="font-display text-3xl md:text-4xl font-bold text-ink">
             <span className="squiggle-underline text-blue">Exercices</span>
@@ -83,7 +85,7 @@ export default async function ExercisesPage({ searchParams }: { searchParams: Pr
               className={`font-display font-bold text-sm px-5 py-2.5 rounded-full border-2 border-ink transition-all no-underline ${
                 params.level === l.id
                   ? "bg-ink text-white shadow-[3px_3px_0px_#FFC857]"
-                  : "bg-white text-ink hover:shadow-[3px_3px_0px_#1A1A2E] hover:-translate-x-0.5 hover:-translate-y-0.5"
+                  : "bg-cream text-ink hover:shadow-[3px_3px_0px_#1A1A2E] hover:-translate-x-0.5 hover:-translate-y-0.5"
               }`}
             >
               {l.icon} {l.label}
@@ -124,8 +126,13 @@ export default async function ExercisesPage({ searchParams }: { searchParams: Pr
         </div>
       </section>
 
-      <footer className="bg-ink text-cream py-8 text-center text-sm">
-        <p>&copy; {new Date().getFullYear()} Mimoune Kenza – Tous droits réservés.</p>
+      <footer className="bg-ink text-cream border-t-3 border-ink py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-cream/50">
+            <p>&copy; {new Date().getFullYear()} <strong className="text-white">Mimoune Kenza</strong> – Tous droits réservés.</p>
+            <p>Fait avec <i className="fa-solid fa-heart text-coral"></i> pour mes élèves</p>
+          </div>
+        </div>
       </footer>
     </>
   );

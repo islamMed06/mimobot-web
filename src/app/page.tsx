@@ -275,7 +275,7 @@ export default function HomePage() {
       {/* ===================== ABOUT ===================== */}
       <section
         id="apropos"
-        className="py-20 md:py-28 bg-white relative border-y-3 border-ink"
+        className="py-20 md:py-28 bg-cream relative border-y-3 border-ink"
       >
         <div className="blob bg-sun w-72 h-72 absolute -top-20 -right-20 opacity-40"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -521,7 +521,7 @@ export default function HomePage() {
                 </ul>
                 <Link
                   href={`/lessons?level=${niveau.level}`}
-                  className={`mt-5 w-full font-display text-sm font-bold text-ink py-2.5 rounded-xl border-3 border-ink bg-white hover:${niveau.color === "bg-ink" ? "hover:bg-coral hover:text-white" : niveau.color === "bg-blue" ? "hover:bg-blue hover:text-white" : niveau.color === "bg-coral" ? "hover:bg-coral hover:text-white" : "hover:bg-mint"} transition-all flex items-center justify-center gap-1 no-underline`}
+                  className={`mt-5 w-full font-display text-sm font-bold text-ink py-2.5 rounded-xl border-3 border-ink bg-cream hover:bg-ink hover:text-cream transition-all flex items-center justify-center gap-1 no-underline`}
                 >
                   Voir tout <i className="fa-solid fa-arrow-right text-xs"></i>
                 </Link>
@@ -715,7 +715,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">
-            <div className="sticker rounded-2xl p-8 bg-white">
+            <div className="sticker rounded-2xl p-8 bg-cream">
               <form id="contact-form" className="space-y-6">
                 <div>
                   <label className="block text-sm font-display font-bold text-ink mb-1.5">
@@ -832,7 +832,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="sticker rounded-2xl p-8 bg-white">
+              <div className="sticker rounded-2xl p-8 bg-cream">
                 <h3 className="font-display text-xl font-bold text-ink mb-6">
                   <i className="fa-solid fa-share-nodes text-coral mr-2"></i>{" "}
                   Suivez-moi

@@ -53,7 +53,7 @@ export default function LoginPage() {
 
           <form
             onSubmit={handleLogin}
-            className="bg-white p-8 rounded-2xl sticker space-y-5"
+            className="bg-cream p-8 rounded-2xl sticker space-y-5"
           >
             <div>
               <label className="block text-sm font-display font-bold text-ink mb-1.5">
