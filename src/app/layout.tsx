@@ -28,6 +28,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className={`${inter.variable} ${baloo2.variable}`}>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
       <body className="font-body text-ink bg-cream overflow-x-hidden">
         {children}
       </body>

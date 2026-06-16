@@ -59,7 +59,6 @@ export default function RegisterPage() {
 
   return (
     <>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
       <div className="min-h-screen flex items-center justify-center bg-cream px-4">
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
