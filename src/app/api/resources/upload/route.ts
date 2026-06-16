@@ -45,7 +45,8 @@ export async function POST(req: NextRequest) {
   };
   const file_type = mimeToType[file.type] || "other";
 
-  const fileName = `${Date.now()}-${crypto.randomUUID().slice(0, 8)}.${ext}`;
+  const rand = Math.random().toString(36).slice(2, 10);
+  const fileName = `${Date.now()}-${rand}.${ext}`;
   const filePath = class_level ? `${class_level}/${fileName}` : fileName;
 
   const arrayBuffer = await file.arrayBuffer();
