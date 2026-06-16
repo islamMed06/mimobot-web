@@ -211,12 +211,10 @@ function FichesContent() {
 
                         <div className="mt-auto">
                           <a
-                            href={f.file_url as string}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            href={`/viewer/${f.id}`}
                             className="w-full font-display font-bold text-sm bg-coral text-white px-5 py-2.5 rounded-full border-2 border-ink shadow-[3px_3px_0px_#1A1A2E] hover:shadow-[5px_5px_0px_#1A1A2E] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all no-underline text-center inline-flex items-center justify-center gap-2"
                           >
-                            <i className="fa-solid fa-download"></i> Télécharger
+                            <i className="fa-regular fa-eye"></i> Voir le document
                           </a>
                         </div>
                       </div>
