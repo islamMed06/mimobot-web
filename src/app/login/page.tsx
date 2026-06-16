@@ -44,7 +44,7 @@ function LoginForm() {
       const redirect = searchParams.get("redirect") || (
         profile?.role === "admin" ? "/admin" : "/premium"
       );
-      router.push(redirect);
+      window.location.href = redirect;
     }
   };
 
