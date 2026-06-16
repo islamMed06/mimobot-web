@@ -42,7 +42,6 @@ export default function PDFViewer({ resourceId, title }: { resourceId: string; t
         const pdf = await pdfjsLib.getDocument({ data: buf.slice(0) }).promise;
         pdfRef.current = pdf;
         setLoading(false);
-        await renderAllPages(pdf, scale);
       } catch (e: any) {
         console.error("PDF init error:", e);
         setError(e.message || "Erreur de chargement");
