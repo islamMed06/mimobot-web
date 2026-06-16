@@ -60,11 +60,7 @@ export default function PDFViewer({ resourceId, title }: { resourceId: string; t
     const pdf = pdfRef.current;
     if (!pdf) return;
 
-    const printWin = window.open("", "_blank");
-    if (!printWin) { alert("Autorise les pop-ups pour imprimer"); return; }
-
-    const canvases: string[] = [];
-    const pdfjsLib = await import("pdfjs-dist");
+    const images: string[] = [];
 
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i);
@@ -73,19 +69,22 @@ export default function PDFViewer({ resourceId, title }: { resourceId: string; t
       c.width = viewport.width;
       c.height = viewport.height;
       await page.render({ canvasContext: c.getContext("2d")!, viewport }).promise;
-      canvases.push(`<div style="page-break-after:always;margin:0;text-align:center">${c.outerHTML}</div>`);
+      images.push(c.toDataURL());
     }
+
+    const printWin = window.open("", "_blank");
+    if (!printWin) { alert("Autorise les pop-ups pour imprimer"); return; }
 
     printWin.document.write(`<!DOCTYPE html><html><head>
       <title>${title}</title>
       <style>
         @page { margin: 0; }
         body { margin: 0; padding: 0; }
-        canvas { max-width: 100%; height: auto; }
+        img { display: block; width: 100%; max-width: 210mm; margin: 0 auto; }
       </style>
-    </head><body>${canvases.join("")}</body></html>`);
+    </head><body>${images.map((src) => `<img src="${src}" />`).join("")}</body></html>`);
     printWin.document.close();
-    setTimeout(() => { printWin.print(); printWin.close(); }, 1000);
+    setTimeout(() => { printWin.print(); printWin.close(); }, 500);
   }, [title]);
 
   return (
