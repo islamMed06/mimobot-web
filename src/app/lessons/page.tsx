@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import Navbar from "@/components/Navbar";
 
 export default async function LessonsPage({ searchParams }: { searchParams: Promise<{ level?: string }> }) {
   const params = await searchParams;
@@ -26,26 +27,7 @@ export default async function LessonsPage({ searchParams }: { searchParams: Prom
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 py-3 bg-cream/92 backdrop-blur-md border-b-3 border-ink">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 no-underline group">
-            <div className="w-10 h-10 rounded-xl bg-blue border-3 border-ink flex items-center justify-center text-white font-display font-bold text-sm">
-              M
-            </div>
-            <div className="leading-tight">
-              <span className="font-display text-lg font-bold text-ink block">
-                Mimoune <span className="text-blue">Kenza</span>
-              </span>
-            </div>
-          </Link>
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="/" className="nav-link text-ink no-underline text-base">Accueil</Link>
-            <Link href="/lessons" className="nav-link text-ink no-underline text-base active">Leçons</Link>
-            <Link href="/exercises" className="nav-link text-ink no-underline text-base">Exercices</Link>
-            <Link href="/resources" className="nav-link text-ink no-underline text-base">Ressources</Link>
-          </nav>
-        </div>
-      </header>
+      <Navbar active="lessons" />
 
       <div className="blob bg-mint w-72 h-72 -top-10 -right-10 opacity-50 fixed"></div>
       <div className="blob bg-coral-light w-56 h-56 -bottom-10 -left-10 opacity-50 fixed"></div>

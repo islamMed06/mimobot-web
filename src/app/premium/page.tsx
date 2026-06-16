@@ -4,18 +4,17 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
 
 export default function PremiumPage() {
   const router = useRouter();
   const supabase = createClient();
-  const [session, setSession] = useState<any>(null);
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!session) { router.push("/login"); return; }
-      setSession(session);
       supabase
         .from("profiles")
         .select("*")
@@ -28,11 +27,6 @@ export default function PremiumPage() {
     });
   }, []);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push("/");
-  };
-
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center bg-cream">
       <p className="font-display text-ink text-lg">Chargement...</p>
@@ -44,24 +38,7 @@ export default function PremiumPage() {
   return (
     <>
       <div className="min-h-screen bg-cream">
-        <header className="navbar fixed top-0 left-0 w-full z-50 py-3 bg-cream/92 backdrop-blur-md border-b-3 border-ink">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3 no-underline">
-              <div className="w-10 h-10 rounded-xl bg-blue border-3 border-ink flex items-center justify-center text-white font-display font-bold text-sm">M</div>
-              <span className="font-display text-lg font-bold text-ink">Mon espace</span>
-            </Link>
-            <div className="flex items-center gap-4">
-              {profile?.role === "admin" && (
-                <Link href="/admin" className="font-display text-sm font-bold text-ink bg-sun px-4 py-2 rounded-full border-2 border-ink no-underline">
-                  <i className="fa-solid fa-cog mr-1"></i> Admin
-                </Link>
-              )}
-              <button onClick={handleLogout} className="font-display text-sm font-bold text-white bg-coral px-4 py-2 rounded-full border-2 border-ink no-underline cursor-pointer">
-                <i className="fa-solid fa-right-from-bracket mr-1"></i> Déconnexion
-              </button>
-            </div>
-          </div>
-        </header>
+        <Navbar simple />
 
         <section className="pt-32 pb-20 max-w-4xl mx-auto px-4">
           <div className="sticker rounded-2xl p-8 mb-8">

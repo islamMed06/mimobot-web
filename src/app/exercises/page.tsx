@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import Navbar from "@/components/Navbar";
 
 const typeLabels: Record<string, string> = {
   multiple_choice: "QCM",
@@ -40,22 +41,7 @@ export default async function ExercisesPage({ searchParams }: { searchParams: Pr
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 py-3 bg-cream/92 backdrop-blur-md border-b-3 border-ink">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 no-underline group">
-            <div className="w-10 h-10 rounded-xl bg-blue border-3 border-ink flex items-center justify-center text-white font-display font-bold text-sm">M</div>
-            <div className="leading-tight">
-              <span className="font-display text-lg font-bold text-ink block">Mimoune <span className="text-blue">Kenza</span></span>
-            </div>
-          </Link>
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="/" className="nav-link text-ink no-underline text-base">Accueil</Link>
-            <Link href="/lessons" className="nav-link text-ink no-underline text-base">Leçons</Link>
-            <Link href="/exercises" className="nav-link text-ink no-underline text-base active">Exercices</Link>
-            <Link href="/resources" className="nav-link text-ink no-underline text-base">Ressources</Link>
-          </nav>
-        </div>
-      </header>
+      <Navbar active="exercises" />
 
       <div className="blob bg-sun w-72 h-72 -top-10 -right-10 opacity-50 fixed"></div>
       <div className="blob bg-mint-light w-56 h-56 -bottom-10 -left-10 opacity-50 fixed"></div>

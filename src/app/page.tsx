@@ -1,18 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
-
-
+import Navbar from "@/components/Navbar";
 
 export default function HomePage() {
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    // Close mobile on resize
-    const handleResize = () => { if (window.innerWidth >= 768) setMobileOpen(false); };
-    window.addEventListener("resize", handleResize);
-
     // Active nav link on scroll
     const sections = document.querySelectorAll("section[id]");
     const navLinks = document.querySelectorAll(".nav-link");
@@ -64,148 +58,13 @@ export default function HomePage() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
       observer.disconnect();
     };
   }, []);
 
   return (
     <>
-      {/* ===================== NAVBAR ===================== */}
-      <header className="navbar fixed top-0 left-0 w-full z-50 py-3 bg-cream/92 backdrop-blur-md border-b-3 border-ink transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <a
-            href="#accueil"
-            className="flex items-center gap-3 no-underline group"
-          >
-            <svg
-              width="46"
-              height="46"
-              viewBox="0 0 46 46"
-              fill="none"
-              className="flex-shrink-0"
-            >
-              <rect
-                x="2"
-                y="2"
-                width="42"
-                height="42"
-                rx="14"
-                fill="#2D5BFF"
-                stroke="#1A1A2E"
-                strokeWidth="3"
-                transform="rotate(-4 23 23)"
-              />
-              <path
-                d="M12 30V16L17 21L22 16V30"
-                stroke="white"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                transform="rotate(-4 23 23)"
-              />
-              <path
-                d="M25 16V30M25 23L32 16M25 23L32 30"
-                stroke="white"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                transform="rotate(-4 23 23)"
-              />
-              <circle
-                cx="36"
-                cy="11"
-                r="3"
-                fill="#FFC857"
-                stroke="#1A1A2E"
-                strokeWidth="2"
-              />
-            </svg>
-            <div className="leading-tight">
-              <span className="font-display text-lg font-bold text-ink block">
-                Mimoune <span className="text-blue">Kenza</span>
-              </span>
-              <span className="text-[10px] font-bold text-coral tracking-wider uppercase block -mt-0.5">
-                English Teacher
-              </span>
-            </div>
-          </a>
-
-          <nav className="hidden md:flex items-center gap-8" id="desktop-nav">
-            <a
-              href="#accueil"
-              className="nav-link text-ink no-underline text-base active"
-            >
-              Accueil
-            </a>
-            <a href="#apropos" className="nav-link text-ink no-underline text-base">
-              À propos
-            </a>
-            <a
-              href="#ressources"
-              className="nav-link text-ink no-underline text-base"
-            >
-              Ressources
-            </a>
-            <a href="#eleves" className="nav-link text-ink no-underline text-base">
-              Coin des élèves
-            </a>
-            <a
-              href="#contact"
-              className="nav-link text-ink no-underline text-base"
-            >
-              Contact
-            </a>
-          </nav>
-
-          <div className="flex items-center gap-4">
-            <Link
-              href="/login"
-              className="hidden md:inline-flex items-center gap-2 font-display bg-white text-ink text-sm font-bold px-4 py-2.5 rounded-full border-2 border-ink hover:bg-ink hover:text-cream transition-all no-underline"
-            >
-              <i className="fa-regular fa-user"></i> Espace élève
-            </Link>
-            <a
-              href="#contact"
-              className="hidden md:inline-flex items-center gap-2 font-display bg-coral text-white text-sm font-bold px-5 py-2.5 rounded-full border-2 border-ink shadow-[3px_3px_0px_#1A1A2E] hover:shadow-[5px_5px_0px_#1A1A2E] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all no-underline"
-            >
-              <i className="fa-regular fa-paper-plane"></i> Me contacter
-            </a>
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden text-ink text-2xl p-1 focus:outline-none"
-              aria-label="Menu"
-            >
-              <i className={`fa-solid ${mobileOpen ? "fa-xmark" : "fa-bars"}`}></i>
-            </button>
-          </div>
-        </div>
-
-        <div
-          className={`md:hidden fixed top-[76px] left-0 w-full bg-cream border-b-3 border-ink p-5 px-6 z-40 transition-all duration-350 ${
-            mobileOpen
-              ? "translate-y-0 opacity-100"
-              : "-translate-y-[120%] opacity-0"
-          }`}
-        >
-          {[
-            { href: "#accueil", label: "Accueil", icon: "🏠" },
-            { href: "#apropos", label: "À propos", icon: "👩‍🏫" },
-            { href: "#ressources", label: "Ressources", icon: "📚" },
-            { href: "#eleves", label: "Coin des élèves", icon: "🎓" },
-            { href: "#contact", label: "Contact", icon: "✉️" },
-          ].map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setMobileOpen(false)}
-              className="block py-3 font-display font-semibold text-base border-b-2 border-dashed border-ink/25 no-underline text-ink"
-            >
-              {l.icon} {l.label}
-            </a>
-          ))}
-        </div>
-      </header>
+      <Navbar landing />
 
       {/* ===================== HERO ===================== */}
       <section

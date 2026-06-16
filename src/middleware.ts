@@ -32,8 +32,9 @@ export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const isAdminRoute = path.startsWith("/admin");
   const isPremiumRoute = path.startsWith("/premium");
+  const isFichesRoute = path.startsWith("/fiches-pedagogiques");
 
-  if (!user && (isAdminRoute || isPremiumRoute)) {
+  if (!user && (isAdminRoute || isPremiumRoute || isFichesRoute)) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("redirect", path);
@@ -48,6 +49,20 @@ export async function middleware(request: NextRequest) {
       .single();
 
     if (profile?.role !== "admin") {
+      const url = request.nextUrl.clone();
+      url.pathname = "/premium";
+      return NextResponse.redirect(url);
+    }
+  }
+
+  if (user && isFichesRoute) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+
+    if (profile?.role !== "premium" && profile?.role !== "admin") {
       const url = request.nextUrl.clone();
       url.pathname = "/premium";
       return NextResponse.redirect(url);
