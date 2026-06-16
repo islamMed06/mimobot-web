@@ -94,7 +94,6 @@ export default function Navbar({
             <a href="#apropos" className="nav-link text-ink no-underline text-base">À propos</a>
             <a href="#ressources" className="nav-link text-ink no-underline text-base">Ressources</a>
             <a href="#eleves" className="nav-link text-ink no-underline text-base">Coin des élèves</a>
-            <a href="#contact" className="nav-link text-ink no-underline text-base">Contact</a>
             {showFiches && (
               <Link href="/fiches-pedagogiques" className="nav-link text-ink no-underline text-base">Fiche pédagogique</Link>
             )}
@@ -125,7 +124,6 @@ export default function Navbar({
             { href: "#apropos", label: "À propos", icon: "👩‍🏫" },
             { href: "#ressources", label: "Ressources", icon: "📚" },
             { href: "#eleves", label: "Coin des élèves", icon: "🎓" },
-            { href: "#contact", label: "Contact", icon: "✉️" },
           ].map((l) => (
             <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)} className="block py-3 font-display font-semibold text-base border-b-2 border-dashed border-ink/25 no-underline text-ink">
               {l.icon} {l.label}
