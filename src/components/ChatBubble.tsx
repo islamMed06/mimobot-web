@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 type Msg = { role: string; content: string };
 
 export default function ChatBubble() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
@@ -55,6 +57,8 @@ export default function ChatBubble() {
       if (data.messages) setMessages(data.messages);
     } catch {}
   }
+
+  if (pathname === "/admin/chat") return null;
 
   async function send() {
     const text = input.trim();
