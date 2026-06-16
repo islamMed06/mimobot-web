@@ -52,7 +52,7 @@ export default async function ViewerPage({ params }: { params: Promise<{ id: str
         </div>
       </header>
       <div className="flex-1 flex flex-col min-h-0" style={{ height: "calc(100vh - 64px)" }}>
-        <PDFViewer fileUrl={resource.file_url} title={resource.title} />
+        <PDFViewer resourceId={id} title={resource.title} />
       </div>
     </div>
   );

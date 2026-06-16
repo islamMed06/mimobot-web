@@ -7,12 +7,27 @@ import "react-pdf/dist/Page/TextLayer.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
-export default function PDFViewer({ fileUrl, title }: { fileUrl: string; title: string }) {
+export default function PDFViewer({ resourceId, title }: { resourceId: string; title: string }) {
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [loading, setLoading] = useState(true);
   const [scale, setScale] = useState(1);
+  const [pdfData, setPdfData] = useState<ArrayBuffer | null>(null);
   const printRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch(`/api/pdf-proxy/${resourceId}`);
+        if (!res.ok) throw new Error("Failed to fetch PDF");
+        const buf = await res.arrayBuffer();
+        setPdfData(buf);
+      } catch (e) {
+        console.error("PDF fetch error:", e);
+        setLoading(false);
+      }
+    })();
+  }, [resourceId]);
 
   function onLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
@@ -93,29 +108,36 @@ export default function PDFViewer({ fileUrl, title }: { fileUrl: string; title: 
       </div>
 
       <div className="flex-1 overflow-auto bg-[#525659] flex justify-center p-4">
-        <Document
-          file={fileUrl}
-          onLoadSuccess={onLoadSuccess}
-          onLoadError={(e) => { console.error("PDF load error:", e); setLoading(false); }}
-          loading={<div className="text-white/60 pt-20 text-center font-display">Chargement du document...</div>}
-        >
-          <div className="shadow-2xl mb-4">
-            <Page
-              pageNumber={pageNumber}
-              scale={scale}
-              renderTextLayer={true}
-              renderAnnotationLayer={true}
-            />
-          </div>
-        </Document>
+        {!pdfData && !loading && (
+          <div className="text-white/60 pt-20 text-center font-display">Échec du chargement du PDF</div>
+        )}
+        {pdfData && (
+          <Document
+            file={pdfData}
+            onLoadSuccess={onLoadSuccess}
+            onLoadError={(e) => { console.error("PDF load error:", e); setLoading(false); }}
+            loading={<div className="text-white/60 pt-20 text-center font-display">Chargement du document...</div>}
+          >
+            <div className="shadow-2xl mb-4">
+              <Page
+                pageNumber={pageNumber}
+                scale={scale}
+                renderTextLayer={true}
+                renderAnnotationLayer={true}
+              />
+            </div>
+          </Document>
+        )}
       </div>
 
       <div ref={printRef} className="hidden">
-        <Document file={fileUrl}>
-          {Array.from({ length: numPages }, (_, i) => (
-            <Page key={i + 1} pageNumber={i + 1} width={794} renderTextLayer={false} renderAnnotationLayer={false} />
-          ))}
-        </Document>
+        {pdfData && (
+          <Document file={pdfData}>
+            {Array.from({ length: numPages }, (_, i) => (
+              <Page key={i + 1} pageNumber={i + 1} width={794} renderTextLayer={false} renderAnnotationLayer={false} />
+            ))}
+          </Document>
+        )}
       </div>
     </div>
   );
