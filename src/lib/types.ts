@@ -2,9 +2,9 @@ export type Database = {
   public: {
     Tables: {
       profiles: {
-        Row: { id: string; email: string; full_name: string | null; created_at: string; updated_at: string };
-        Insert: { id: string; email: string; full_name?: string | null };
-        Update: { full_name?: string | null };
+        Row: { id: string; email: string; full_name: string | null; role: string; created_at: string; updated_at: string };
+        Insert: { id: string; email: string; full_name?: string | null; role?: string };
+        Update: { full_name?: string | null; role?: string };
         Relationships: [];
       };
       lessons: {

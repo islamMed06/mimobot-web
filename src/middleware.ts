@@ -29,13 +29,29 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isAdmin = request.nextUrl.pathname.startsWith("/admin");
+  const path = request.nextUrl.pathname;
+  const isAdminRoute = path.startsWith("/admin");
+  const isPremiumRoute = path.startsWith("/premium");
 
-  if (!user && isAdmin) {
+  if (!user && (isAdminRoute || isPremiumRoute)) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
-    url.searchParams.set("redirect", request.nextUrl.pathname);
+    url.searchParams.set("redirect", path);
     return NextResponse.redirect(url);
+  }
+
+  if (user && isAdminRoute) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+
+    if (profile?.role !== "admin") {
+      const url = request.nextUrl.clone();
+      url.pathname = "/premium";
+      return NextResponse.redirect(url);
+    }
   }
 
   return supabaseResponse;
