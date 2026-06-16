@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import AdminSidebar from "@/components/AdminSidebar";
+import ChatBubble from "@/components/ChatBubble";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -37,6 +38,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <main className="flex-1 p-6 md:p-8 overflow-auto">
         {children}
       </main>
+
+      <ChatBubble />
     </div>
   );
 }
