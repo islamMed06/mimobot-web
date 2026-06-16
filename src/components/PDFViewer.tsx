@@ -1,50 +1,83 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { pdfjs, Document, Page } from "react-pdf";
-import "react-pdf/dist/Page/AnnotationLayer.css";
-import "react-pdf/dist/Page/TextLayer.css";
-
-pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
 export default function PDFViewer({ resourceId, title }: { resourceId: string; title: string }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [loading, setLoading] = useState(true);
   const [scale, setScale] = useState(1);
-  const [pdfData, setPdfData] = useState<ArrayBuffer | null>(null);
-  const printRef = useRef<HTMLDivElement>(null);
+  const [error, setError] = useState("");
+  const pdfRef = useRef<any>(null);
+  const pdfDataRef = useRef<ArrayBuffer | null>(null);
+  const allPagesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     (async () => {
       try {
         const res = await fetch(`/api/pdf-proxy/${resourceId}`);
-        if (!res.ok) throw new Error("Failed to fetch PDF");
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const buf = await res.arrayBuffer();
-        setPdfData(buf);
-      } catch (e) {
-        console.error("PDF fetch error:", e);
+        pdfDataRef.current = buf;
+
+        const pdfjsLib = await import("pdfjs-dist");
+        pdfjsLib.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+
+        const pdf = await pdfjsLib.getDocument({ data: buf.slice(0) }).promise;
+        pdfRef.current = pdf;
+        setNumPages(pdf.numPages);
+        setLoading(false);
+        renderPage(pdf, 1, scale);
+      } catch (e: any) {
+        console.error("PDF init error:", e);
+        setError(e.message || "Erreur de chargement");
         setLoading(false);
       }
     })();
   }, [resourceId]);
 
-  function onLoadSuccess({ numPages }: { numPages: number }) {
-    setNumPages(numPages);
-    setLoading(false);
-  }
+  useEffect(() => {
+    if (pdfRef.current && !loading) {
+      renderPage(pdfRef.current, pageNumber, scale);
+    }
+  }, [pageNumber, scale, loading]);
 
-  const handlePrint = useCallback(() => {
+  const renderPage = useCallback(async (pdf: any, pageNum: number, s: number) => {
+    if (!canvasRef.current) return;
+    try {
+      const page = await pdf.getPage(pageNum);
+      const viewport = page.getViewport({ scale: s });
+      const canvas = canvasRef.current;
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      const ctx = canvas.getContext("2d")!;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      await page.render({ canvasContext: ctx, viewport }).promise;
+    } catch (e) {
+      console.error("Render error:", e);
+    }
+  }, []);
+
+  const handlePrint = useCallback(async () => {
+    const pdf = pdfRef.current;
+    if (!pdf) return;
+
     const printWin = window.open("", "_blank");
     if (!printWin) { alert("Autorise les pop-ups pour imprimer"); return; }
 
-    const doc = printRef.current;
-    if (!doc) return;
+    const canvases: string[] = [];
+    const pdfjsLib = await import("pdfjs-dist");
 
-    const allCanvases = doc.querySelectorAll("canvas");
-    const html = Array.from(allCanvases)
-      .map((c, i) => `<div style="page-break-after:always;margin:0;text-align:center">${c.outerHTML}</div>`)
-      .join("");
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const viewport = page.getViewport({ scale: 1.5 });
+      const c = document.createElement("canvas");
+      c.width = viewport.width;
+      c.height = viewport.height;
+      await page.render({ canvasContext: c.getContext("2d")!, viewport }).promise;
+      canvases.push(`<div style="page-break-after:always;margin:0;text-align:center">${c.outerHTML}</div>`);
+    }
 
     printWin.document.write(`<!DOCTYPE html><html><head>
       <title>${title}</title>
@@ -53,10 +86,9 @@ export default function PDFViewer({ resourceId, title }: { resourceId: string; t
         body { margin: 0; padding: 0; }
         canvas { max-width: 100%; height: auto; }
       </style>
-    </head><body>${html}</body></html>`);
+    </head><body>${canvases.join("")}</body></html>`);
     printWin.document.close();
-
-    setTimeout(() => { printWin.print(); printWin.close(); }, 500);
+    setTimeout(() => { printWin.print(); printWin.close(); }, 1000);
   }, [title]);
 
   return (
@@ -71,7 +103,7 @@ export default function PDFViewer({ resourceId, title }: { resourceId: string; t
         </button>
 
         <span className="text-white/80 text-sm font-display">
-          {loading ? "Chargement..." : `${pageNumber} / ${numPages}`}
+          {loading ? "Chargement..." : error ? "Erreur" : `${pageNumber} / ${numPages}`}
         </span>
 
         <button
@@ -108,35 +140,17 @@ export default function PDFViewer({ resourceId, title }: { resourceId: string; t
       </div>
 
       <div className="flex-1 overflow-auto bg-[#525659] flex justify-center p-4">
-        {!pdfData && !loading && (
-          <div className="text-white/60 pt-20 text-center font-display">Échec du chargement du PDF</div>
+        {loading && (
+          <div className="text-white/60 pt-20 text-center font-display">Chargement du document...</div>
         )}
-        {pdfData && (
-          <Document
-            file={pdfData}
-            onLoadSuccess={onLoadSuccess}
-            onLoadError={(e) => { console.error("PDF load error:", e); setLoading(false); }}
-            loading={<div className="text-white/60 pt-20 text-center font-display">Chargement du document...</div>}
-          >
-            <div className="shadow-2xl mb-4">
-              <Page
-                pageNumber={pageNumber}
-                scale={scale}
-                renderTextLayer={true}
-                renderAnnotationLayer={true}
-              />
-            </div>
-          </Document>
+        {error && (
+          <div className="text-red-400 pt-20 text-center font-display">
+            <i className="fa-solid fa-exclamation-triangle mr-2"></i>
+            Échec du chargement du PDF
+          </div>
         )}
-      </div>
-
-      <div ref={printRef} className="hidden">
-        {pdfData && (
-          <Document file={pdfData}>
-            {Array.from({ length: numPages }, (_, i) => (
-              <Page key={i + 1} pageNumber={i + 1} width={794} renderTextLayer={false} renderAnnotationLayer={false} />
-            ))}
-          </Document>
+        {!loading && !error && (
+          <canvas ref={canvasRef} className="shadow-2xl" />
         )}
       </div>
     </div>
