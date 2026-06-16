@@ -55,20 +55,6 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  if (user && isFichesRoute) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .single();
-
-    if (profile?.role !== "premium" && profile?.role !== "admin") {
-      const url = request.nextUrl.clone();
-      url.pathname = "/premium";
-      return NextResponse.redirect(url);
-    }
-  }
-
   return supabaseResponse;
 }
 

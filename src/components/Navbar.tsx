@@ -16,6 +16,7 @@ export default function Navbar({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [role, setRole] = useState<string | null>(null);
+
   const supabase = createClient();
 
   useEffect(() => {
@@ -39,8 +40,6 @@ export default function Navbar({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const showFiches = role === "premium" || role === "admin";
-
   if (simple) {
     return (
       <header className="navbar fixed top-0 left-0 w-full z-50 py-3 bg-cream/92 backdrop-blur-md border-b-3 border-ink">
@@ -50,11 +49,9 @@ export default function Navbar({
             <span className="font-display text-lg font-bold text-ink">Mon espace</span>
           </Link>
           <div className="flex items-center gap-4">
-            {showFiches && (
-              <Link href="/fiches-pedagogiques" className="font-display text-sm font-bold text-ink bg-mint-light px-4 py-2 rounded-full border-2 border-ink no-underline hover:bg-mint hover:text-white transition-all">
-                <i className="fa-solid fa-file-pen mr-1"></i> Fiches
-              </Link>
-            )}
+            <Link href="/fiches-pedagogiques" className="font-display text-sm font-bold text-ink bg-mint-light px-4 py-2 rounded-full border-2 border-ink no-underline hover:bg-mint hover:text-white transition-all">
+              <i className="fa-solid fa-file-pen mr-1"></i> Fiches
+            </Link>
             {role === "admin" && (
               <Link href="/admin" className="font-display text-sm font-bold text-ink bg-sun px-4 py-2 rounded-full border-2 border-ink no-underline">
                 <i className="fa-solid fa-cog mr-1"></i> Admin
@@ -94,9 +91,7 @@ export default function Navbar({
             <a href="#apropos" className="nav-link text-ink no-underline text-base">À propos</a>
             <a href="#ressources" className="nav-link text-ink no-underline text-base">Ressources</a>
             <a href="#eleves" className="nav-link text-ink no-underline text-base">Coin des élèves</a>
-            {showFiches && (
-              <Link href="/fiches-pedagogiques" className="nav-link text-ink no-underline text-base">Fiche pédagogique</Link>
-            )}
+            <Link href="/fiches-pedagogiques" className="nav-link text-ink no-underline text-base">Fiche pédagogique</Link>
           </nav>
 
           <div className="flex items-center gap-4">
@@ -129,11 +124,9 @@ export default function Navbar({
               {l.icon} {l.label}
             </a>
           ))}
-          {showFiches && (
-            <Link href="/fiches-pedagogiques" onClick={() => setMobileOpen(false)} className="block py-3 font-display font-semibold text-base border-b-2 border-dashed border-ink/25 no-underline text-ink">
-              📋 Fiche pédagogique
-            </Link>
-          )}
+          <Link href="/fiches-pedagogiques" onClick={() => setMobileOpen(false)} className="block py-3 font-display font-semibold text-base border-b-2 border-dashed border-ink/25 no-underline text-ink">
+            📋 Fiche pédagogique
+          </Link>
         </div>
       </header>
     );
@@ -153,9 +146,7 @@ export default function Navbar({
           <Link href="/lessons" className={`nav-link text-ink no-underline text-base ${active === "lessons" ? "active" : ""}`}>Leçons</Link>
           <Link href="/exercises" className={`nav-link text-ink no-underline text-base ${active === "exercises" ? "active" : ""}`}>Exercices</Link>
           <Link href="/resources" className={`nav-link text-ink no-underline text-base ${active === "resources" ? "active" : ""}`}>Ressources</Link>
-          {showFiches && (
-            <Link href="/fiches-pedagogiques" className={`nav-link text-ink no-underline text-base ${active === "fiches" ? "active" : ""}`}>Fiche pédagogique</Link>
-          )}
+          <Link href="/fiches-pedagogiques" className={`nav-link text-ink no-underline text-base ${active === "fiches" ? "active" : ""}`}>Fiche pédagogique</Link>
         </nav>
       </div>
     </header>
