@@ -115,7 +115,7 @@ export default function PremiumPage() {
                   />
                   <button
                     onClick={handlePasswordChange}
-                    className="font-display font-bold text-sm text-white bg-blue px-5 py-2.5 rounded-full border-2 border-ink hover:opacity-90 transition-all cursor-pointer"
+                    className="font-display font-bold text-sm text-ink bg-sun px-5 py-2.5 rounded-full border-2 border-ink hover:shadow-[3px_3px_0px_#1A1A2E] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all cursor-pointer"
                   >
                     Enregistrer
                   </button>
