@@ -64,7 +64,7 @@ export default function PremiumPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="block text-xs font-display font-bold text-ink/50 uppercase tracking-wide mb-1">Nom complet</label>
-                <p className="font-display text-base font-semibold text-ink bg-white border-2 border-ink/20 rounded-xl px-4 py-3">{profile?.full_name || "—"}</p>
+                <p className="font-display text-base text-ink bg-white border-2 border-ink/20 rounded-xl px-4 py-3">{profile?.full_name || "—"}</p>
               </div>
               <div>
                 <label className="block text-xs font-display font-bold text-ink/50 uppercase tracking-wide mb-1">Email</label>
