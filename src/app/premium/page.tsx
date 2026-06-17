@@ -34,7 +34,7 @@ export default function PremiumPage() {
   );
 
   const isPremium = profile?.role === "premium";
-  const isStudent = profile?.user_type === "student";
+  const isFreeTeacher = !isPremium && profile?.user_type === "teacher";
 
   return (
     <>
@@ -77,7 +77,7 @@ export default function PremiumPage() {
                 </Link>
               </div>
             </div>
-          ) : !isStudent ? (
+          ) : isFreeTeacher ? (
             <div className="sticker rounded-2xl p-8 bg-sun-light">
               <h2 className="font-display text-xl font-bold text-ink mb-4">
                 <i className="fa-solid fa-lock text-coral mr-2"></i> Compte Gratuit
