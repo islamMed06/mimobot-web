@@ -1,16 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase";
 
 export default function AdminUsersPage() {
-  const supabase = createClient();
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchUsers = async () => {
-    const { data } = await supabase.from("profiles").select("*").order("created_at", { ascending: false });
-    if (data) setUsers(data);
+    const res = await fetch("/api/admin/users");
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.users) setUsers(data.users);
     setLoading(false);
   };
 
@@ -18,7 +18,11 @@ export default function AdminUsersPage() {
 
   const togglePremium = async (user: any) => {
     const newRole = user.role === "premium" ? "free" : "premium";
-    await supabase.from("profiles").update({ role: newRole }).eq("id", user.id);
+    await fetch("/api/admin/users", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: user.id, role: newRole }),
+    });
     fetchUsers();
   };
 
