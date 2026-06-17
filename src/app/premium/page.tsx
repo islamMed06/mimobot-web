@@ -34,6 +34,7 @@ export default function PremiumPage() {
   );
 
   const isPremium = profile?.role === "premium";
+  const isStudent = profile?.user_type === "student";
 
   return (
     <>
@@ -76,7 +77,7 @@ export default function PremiumPage() {
                 </Link>
               </div>
             </div>
-          ) : (
+          ) : !isStudent ? (
             <div className="sticker rounded-2xl p-8 bg-sun-light">
               <h2 className="font-display text-xl font-bold text-ink mb-4">
                 <i className="fa-solid fa-lock text-coral mr-2"></i> Compte Gratuit
@@ -99,7 +100,7 @@ export default function PremiumPage() {
                 Une fois le paiement effectué, ton accès sera activé manuellement et tu pourras profiter de tous les contenus premium.
               </p>
             </div>
-          )}
+          ) : null}
         </section>
       </div>
     </>
