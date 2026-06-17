@@ -11,6 +11,7 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [userType, setUserType] = useState<"teacher" | "student">("student");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -44,6 +45,7 @@ export default function RegisterPage() {
         email: data.user.email!,
         full_name: fullName || null,
         role: "free",
+        user_type: userType,
       });
 
       if (profileError) {
@@ -95,6 +97,44 @@ export default function RegisterPage() {
                   className="form-input w-full px-4 py-3 text-sm"
                   placeholder="Mimoune Kenza"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-display font-bold text-ink mb-1.5">
+                  <i className="fa-solid fa-graduation-cap text-blue mr-1"></i> Je suis
+                </label>
+                <div className="flex gap-3">
+                  <label className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 cursor-pointer transition-all text-sm font-display font-bold ${
+                    userType === "student"
+                      ? "bg-blue text-white border-blue"
+                      : "bg-white border-gray-200 text-ink/60 hover:border-blue/40"
+                  }`}>
+                    <input
+                      type="radio"
+                      name="userType"
+                      value="student"
+                      checked={userType === "student"}
+                      onChange={() => setUserType("student")}
+                      className="sr-only"
+                    />
+                    <i className="fa-solid fa-user"></i> Élève
+                  </label>
+                  <label className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 cursor-pointer transition-all text-sm font-display font-bold ${
+                    userType === "teacher"
+                      ? "bg-blue text-white border-blue"
+                      : "bg-white border-gray-200 text-ink/60 hover:border-blue/40"
+                  }`}>
+                    <input
+                      type="radio"
+                      name="userType"
+                      value="teacher"
+                      checked={userType === "teacher"}
+                      onChange={() => setUserType("teacher")}
+                      className="sr-only"
+                    />
+                    <i className="fa-solid fa-chalkboard-user"></i> Professeur
+                  </label>
+                </div>
               </div>
 
               <div>

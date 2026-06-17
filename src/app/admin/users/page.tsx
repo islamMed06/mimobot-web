@@ -36,6 +36,7 @@ export default function AdminUsersPage() {
             <tr>
               <th className="p-3 text-left">Nom</th>
               <th className="p-3 text-left">Email</th>
+              <th className="p-3 text-center">Type</th>
               <th className="p-3 text-center">Rôle</th>
               <th className="p-3 text-center">Inscrit le</th>
               <th className="p-3 text-center">Action</th>
@@ -46,6 +47,19 @@ export default function AdminUsersPage() {
               <tr key={u.id} className={`${i % 2 === 0 ? "bg-cream" : "bg-white"} border-b-2 border-ink/10`}>
                 <td className="p-3 font-semibold">{u.full_name || "—"}</td>
                 <td className="p-3 text-ink/70">{u.email}</td>
+                <td className="p-3 text-center">
+                  {u.user_type === "teacher" ? (
+                    <span className="inline-flex items-center gap-1 font-display font-bold text-xs px-3 py-1 rounded-full border-2 border-ink bg-purple-50 text-purple-700">
+                      <i className="fa-solid fa-chalkboard-user"></i> Professeur
+                    </span>
+                  ) : u.user_type === "student" ? (
+                    <span className="inline-flex items-center gap-1 font-display font-bold text-xs px-3 py-1 rounded-full border-2 border-ink bg-blue-50 text-blue-700">
+                      <i className="fa-solid fa-user"></i> Élève
+                    </span>
+                  ) : (
+                    <span className="text-ink/30">—</span>
+                  )}
+                </td>
                 <td className="p-3 text-center">
                   <span className={`inline-flex items-center gap-1 font-display font-bold text-xs px-3 py-1 rounded-full border-2 border-ink ${
                     u.role === "admin" ? "bg-ink text-cream" :

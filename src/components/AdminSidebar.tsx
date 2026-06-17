@@ -6,7 +6,6 @@ import { createClient } from "@/lib/supabase";
 
 const links = [
   { href: "/admin", label: "Dashboard", icon: "D" },
-  { href: "/admin/chat", label: "Chat", icon: "C" },
   { href: "/admin/lessons", label: "Leçons", icon: "L" },
   { href: "/admin/exercises", label: "Exercices", icon: "E" },
   { href: "/admin/resources", label: "Ressources", icon: "R" },
@@ -54,9 +53,19 @@ export default function AdminSidebar({ onNavigate }: { onNavigate: () => void })
       </nav>
 
       <div className="p-3 border-t border-gray-800">
+        <Link
+          href="/admin/chat"
+          onClick={onNavigate}
+          className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+            pathname === "/admin/chat" ? "bg-gray-800 text-white" : "text-gray-400 hover:text-white hover:bg-gray-800"
+          }`}
+        >
+          <span className="w-6 h-6 rounded bg-gray-700 flex items-center justify-center text-xs font-bold">C</span>
+          Chat
+        </Link>
         <button
           onClick={handleLogout}
-          className="w-full text-left px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+          className="w-full text-left px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors mt-1"
         >
           Déconnexion
         </button>
