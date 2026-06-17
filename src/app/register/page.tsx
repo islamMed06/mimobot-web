@@ -106,8 +106,8 @@ export default function RegisterPage() {
                 <div className="flex gap-3">
                   <label className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 cursor-pointer transition-all text-sm font-display font-bold ${
                     userType === "student"
-                      ? "bg-blue text-white border-blue"
-                      : "bg-white border-gray-200 text-ink/60 hover:border-blue/40"
+                      ? "bg-[#FFC857] text-[#1A1A2E] border-[#1A1A2E]"
+                      : "bg-white border-gray-200 text-ink/60 hover:border-[#FFC857]/60"
                   }`}>
                     <input
                       type="radio"
@@ -121,8 +121,8 @@ export default function RegisterPage() {
                   </label>
                   <label className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 cursor-pointer transition-all text-sm font-display font-bold ${
                     userType === "teacher"
-                      ? "bg-blue text-white border-blue"
-                      : "bg-white border-gray-200 text-ink/60 hover:border-blue/40"
+                      ? "bg-[#FFC857] text-[#1A1A2E] border-[#1A1A2E]"
+                      : "bg-white border-gray-200 text-ink/60 hover:border-[#FFC857]/60"
                   }`}>
                     <input
                       type="radio"
