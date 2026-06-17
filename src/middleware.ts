@@ -41,16 +41,22 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (user && isAdminRoute) {
+  if (user) {
     const { data: profile } = await supabase
       .from("profiles")
-      .select("role")
+      .select("role, user_type")
       .eq("id", user.id)
       .single();
 
-    if (profile?.role !== "admin") {
+    if (isAdminRoute && profile?.role !== "admin") {
       const url = request.nextUrl.clone();
       url.pathname = "/premium";
+      return NextResponse.redirect(url);
+    }
+
+    if (isFichesRoute && profile?.user_type === "student") {
+      const url = request.nextUrl.clone();
+      url.pathname = "/resources";
       return NextResponse.redirect(url);
     }
   }

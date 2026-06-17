@@ -21,7 +21,10 @@ export default async function ViewerPage({ params }: { params: Promise<{ id: str
 
   if (!resource) notFound();
 
-  const backLink = resource.price > 0 ? "/fiches-pedagogiques" : "/resources";
+  const { data: { user } } = await supabase.auth.getUser();
+  const { data: profile } = user ? await supabase.from("profiles").select("user_type").eq("id", user.id).single() : { data: null };
+  const isStudent = profile?.user_type === "student";
+  const backLink = resource.price > 0 && !isStudent ? "/fiches-pedagogiques" : "/resources";
 
   return (
     <div className="min-h-screen bg-cream flex flex-col">
