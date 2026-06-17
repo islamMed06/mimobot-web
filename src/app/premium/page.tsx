@@ -181,7 +181,7 @@ export default function PremiumPage() {
         </section>
 
         {/* Watermark */}
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 opacity-15 pointer-events-none select-none flex items-center gap-3">
+        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 opacity-15 pointer-events-none select-none flex items-center gap-3">
           <svg width="40" height="40" viewBox="0 0 46 46" fill="none" className="flex-shrink-0">
             <rect x="2" y="2" width="42" height="42" rx="14" fill="#2D5BFF" stroke="#1A1A2E" strokeWidth="3" transform="rotate(-4 23 23)"/>
             <path d="M12 30V16L17 21L22 16V30" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" transform="rotate(-4 23 23)"/>
