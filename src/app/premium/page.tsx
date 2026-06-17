@@ -11,6 +11,9 @@ export default function PremiumPage() {
   const supabase = createClient();
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [showPwdForm, setShowPwdForm] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [pwdMsg, setPwdMsg] = useState("");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -27,6 +30,16 @@ export default function PremiumPage() {
     });
   }, []);
 
+  const handlePasswordChange = async () => {
+    if (newPassword.length < 6) { setPwdMsg("6 caractères minimum"); return; }
+    setPwdMsg("");
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    if (error) { setPwdMsg(error.message); return; }
+    setPwdMsg("Mot de passe mis à jour !");
+    setNewPassword("");
+    setShowPwdForm(false);
+  };
+
   if (loading) return (
     <div className="min-h-screen flex items-center justify-center bg-cream">
       <p className="font-display text-ink text-lg">Chargement...</p>
@@ -35,30 +48,94 @@ export default function PremiumPage() {
 
   const isPremium = profile?.role === "premium";
   const isFreeTeacher = !isPremium && profile?.user_type === "teacher";
+  const userTypeLabel = profile?.user_type === "teacher" ? "Professeur" : profile?.user_type === "student" ? "Élève" : null;
 
   return (
     <>
       <div className="min-h-screen bg-cream">
         <Navbar simple />
 
-        <section className="pt-32 pb-20 max-w-4xl mx-auto px-4">
-          <div className="sticker rounded-2xl p-8 mb-8">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 rounded-2xl bg-blue border-3 border-ink flex items-center justify-center text-white font-display font-bold text-2xl">
-                {profile?.full_name?.charAt(0) || "U"}
+        <section className="pt-32 pb-20 max-w-4xl mx-auto px-4 space-y-6">
+          {/* Infos personnelles */}
+          <div className="sticker rounded-2xl p-8">
+            <h2 className="font-display text-xl font-bold text-ink mb-6">
+              <i className="fa-regular fa-user text-blue mr-2"></i> Mes informations
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label className="block text-xs font-display font-bold text-ink/50 uppercase tracking-wide mb-1">Nom complet</label>
+                <p className="font-display text-base font-semibold text-ink bg-white border-2 border-ink/20 rounded-xl px-4 py-3">{profile?.full_name || "—"}</p>
               </div>
               <div>
-                <h1 className="font-display text-2xl font-bold text-ink">{profile?.full_name || "Bienvenue"}</h1>
-                <p className="text-ink/60 text-sm">{profile?.email}</p>
+                <label className="block text-xs font-display font-bold text-ink/50 uppercase tracking-wide mb-1">Email</label>
+                <p className="font-display text-base text-ink bg-white border-2 border-ink/20 rounded-xl px-4 py-3">{profile?.email}</p>
+              </div>
+              <div>
+                <label className="block text-xs font-display font-bold text-ink/50 uppercase tracking-wide mb-1">Statut</label>
+                <p className="font-display text-base text-ink bg-white border-2 border-ink/20 rounded-xl px-4 py-3">
+                  {userTypeLabel ? (
+                    <span className={`inline-flex items-center gap-1.5 font-bold ${
+                      profile.user_type === "teacher" ? "text-purple-700" : "text-blue-700"
+                    }`}>
+                      <i className={`fa-solid ${profile.user_type === "teacher" ? "fa-chalkboard-user" : "fa-user"}`}></i>
+                      {userTypeLabel}
+                    </span>
+                  ) : "—"}
+                </p>
+              </div>
+              <div>
+                <label className="block text-xs font-display font-bold text-ink/50 uppercase tracking-wide mb-1">Compte</label>
+                <p className={`inline-flex items-center gap-2 font-display text-sm font-bold px-4 py-2 rounded-xl border-2 border-ink ${
+                  isPremium ? "bg-mint-light text-mint" : "bg-sun-light text-ink"
+                }`}>
+                  <i className={`fa-solid ${isPremium ? "fa-crown" : "fa-user"}`}></i>
+                  {isPremium ? "Premium" : "Gratuit"}
+                </p>
               </div>
             </div>
 
-            <div className={`inline-flex items-center gap-2 font-display text-sm font-bold px-4 py-2 rounded-full border-2 border-ink ${isPremium ? "bg-mint-light text-mint" : "bg-sun-light text-ink"}`}>
-              <i className={`fa-solid ${isPremium ? "fa-crown" : "fa-user"}`}></i>
-              {isPremium ? "Compte Premium" : "Compte Gratuit"}
+            <hr className="my-6 border-ink/10" />
+
+            <div>
+              <button
+                onClick={() => setShowPwdForm(!showPwdForm)}
+                className="font-display font-bold text-sm text-ink bg-sun-light px-5 py-2.5 rounded-full border-2 border-ink hover:bg-sun transition-all cursor-pointer"
+              >
+                <i className="fa-solid fa-lock mr-1.5"></i> Changer le mot de passe
+              </button>
+
+              {showPwdForm && (
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="Nouveau mot de passe (6+ caractères)"
+                    className="flex-1 min-w-[200px] px-4 py-2.5 border-2 border-ink rounded-xl text-sm font-display outline-none"
+                  />
+                  <button
+                    onClick={handlePasswordChange}
+                    className="font-display font-bold text-sm text-white bg-blue px-5 py-2.5 rounded-full border-2 border-ink hover:opacity-90 transition-all cursor-pointer"
+                  >
+                    Enregistrer
+                  </button>
+                  <button
+                    onClick={() => { setShowPwdForm(false); setNewPassword(""); setPwdMsg(""); }}
+                    className="font-display text-sm text-ink/50 hover:text-ink px-3 py-2 cursor-pointer"
+                  >
+                    Annuler
+                  </button>
+                  {pwdMsg && (
+                    <span className={`text-sm font-display font-bold ${pwdMsg.includes("jour") ? "text-mint" : "text-coral"}`}>
+                      {pwdMsg}
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
+          {/* Contenu premium / gratuit */}
           {isPremium ? (
             <div className="sticker rounded-2xl p-8 bg-mint-light">
               <h2 className="font-display text-xl font-bold text-ink mb-4">
