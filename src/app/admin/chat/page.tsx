@@ -9,6 +9,7 @@ export default function AdminChat() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const localRef = useRef<Msg[]>([]);
 
   useEffect(() => {
     fetchHistory();
@@ -23,7 +24,7 @@ export default function AdminChat() {
       const res = await fetch("/api/chat/history");
       if (!res.ok) return;
       const data = await res.json();
-      if (data.messages) setMessages(data.messages);
+      if (data.messages) setMessages([...data.messages, ...localRef.current]);
     } catch {}
   }
 
@@ -34,6 +35,7 @@ export default function AdminChat() {
     setLoading(true);
     const userMsg: Msg = { role: "user", content: text };
     setMessages((prev) => [...prev, userMsg]);
+    localRef.current = [...localRef.current, userMsg];
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -42,7 +44,9 @@ export default function AdminChat() {
       });
       const data = await res.json();
       if (data.response) {
-        setMessages((prev) => [...prev, { role: "assistant", content: data.response }]);
+        const asst = { role: "assistant" as const, content: data.response };
+        setMessages((prev) => [...prev, asst]);
+        localRef.current = [...localRef.current, asst];
       }
     } catch {}
     setLoading(false);
