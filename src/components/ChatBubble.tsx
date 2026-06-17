@@ -14,23 +14,17 @@ export default function ChatBubble() {
   const panelRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const historyLenRef = useRef(0);
+  const localRef = useRef<Msg[]>([]);
 
   useEffect(() => {
     if (open) {
       fetchHistory();
-      intervalRef.current = setInterval(fetchHistory, 3000);
+      intervalRef.current = setInterval(fetchHistory, 5000);
     } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
+      if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
     }
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    };
+    return () => { if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; } };
   }, [open]);
 
   useEffect(() => {
@@ -54,7 +48,10 @@ export default function ChatBubble() {
       const res = await fetch("/api/chat/history");
       if (!res.ok) return;
       const data = await res.json();
-      if (data.messages) setMessages(data.messages);
+      if (!data.messages) return;
+      if (data.messages.length === historyLenRef.current) return;
+      historyLenRef.current = data.messages.length;
+      setMessages([...data.messages, ...localRef.current]);
     } catch {}
   }
 
@@ -65,7 +62,9 @@ export default function ChatBubble() {
     if (!text || loading) return;
     setInput("");
     setLoading(true);
-    setMessages((prev) => [...prev, { role: "user", content: text }]);
+    const userMsg: Msg = { role: "user", content: text };
+    localRef.current.push(userMsg);
+    setMessages((prev) => [...prev, userMsg]);
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -74,7 +73,9 @@ export default function ChatBubble() {
       });
       const data = await res.json();
       if (data.response) {
-        setMessages((prev) => [...prev, { role: "assistant", content: data.response }]);
+        const asstMsg: Msg = { role: "assistant", content: data.response };
+        localRef.current.push(asstMsg);
+        setMessages((prev) => [...prev, asstMsg]);
       }
     } catch {}
     setLoading(false);
@@ -105,25 +106,17 @@ export default function ChatBubble() {
         >
           <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-sm font-bold text-white">
-                M
-              </div>
+              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-sm font-bold text-white">M</div>
               <div>
                 <p className="text-sm font-semibold text-white">MimoBot</p>
                 <p className="text-xs text-green-400">● en ligne</p>
               </div>
             </div>
             <div className="flex items-center gap-1">
-              <a
-                href="/admin/chat"
-                className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded hover:bg-gray-700 transition-colors"
-              >
+              <a href="/admin/chat" className="text-xs text-gray-400 hover:text-white px-2 py-1 rounded hover:bg-gray-700 transition-colors">
                 Ouvrir en grand →
               </a>
-              <button
-                onClick={() => setOpen(false)}
-                className="text-gray-400 hover:text-white p-1 rounded hover:bg-gray-700 transition-colors"
-              >
+              <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-white p-1 rounded hover:bg-gray-700 transition-colors">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -133,19 +126,11 @@ export default function ChatBubble() {
 
           <div className="flex-1 overflow-y-auto p-4 space-y-3">
             {messages.length === 0 && (
-              <p className="text-gray-500 text-xs text-center mt-8">
-                Aucun message. Écris quelque chose pour commencer !
-              </p>
+              <p className="text-gray-500 text-xs text-center mt-8">Aucun message. Écris quelque chose pour commencer !</p>
             )}
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div
-                  className={`max-w-[85%] rounded-xl px-3 py-2 text-sm whitespace-pre-wrap ${
-                    m.role === "user"
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-800 text-gray-100"
-                  }`}
-                >
+                <div className={`max-w-[85%] rounded-xl px-3 py-2 text-sm whitespace-pre-wrap ${m.role === "user" ? "bg-blue-600 text-white" : "bg-gray-800 text-gray-100"}`}>
                   {m.content}
                 </div>
               </div>
