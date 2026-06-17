@@ -76,7 +76,7 @@ export default function AdminUsersPage() {
                 </td>
                 <td className="p-3 text-center text-ink/50 text-xs">{new Date(u.created_at).toLocaleDateString()}</td>
                 <td className="p-3 text-center">
-                  {u.role !== "admin" && (
+                  {u.role !== "admin" && u.user_type !== "student" && (
                     <button
                       onClick={() => togglePremium(u)}
                       className={`font-display font-bold text-xs px-4 py-1.5 rounded-full border-2 border-ink transition-all cursor-pointer ${
