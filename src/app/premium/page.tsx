@@ -179,6 +179,20 @@ export default function PremiumPage() {
             </div>
           ) : null}
         </section>
+
+        {/* Watermark */}
+        <div className="fixed bottom-6 right-6 opacity-15 pointer-events-none select-none flex items-center gap-3">
+          <svg width="40" height="40" viewBox="0 0 46 46" fill="none" className="flex-shrink-0">
+            <rect x="2" y="2" width="42" height="42" rx="14" fill="#2D5BFF" stroke="#1A1A2E" strokeWidth="3" transform="rotate(-4 23 23)"/>
+            <path d="M12 30V16L17 21L22 16V30" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" transform="rotate(-4 23 23)"/>
+            <path d="M25 16V30M25 23L32 16M25 23L32 30" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" transform="rotate(-4 23 23)"/>
+            <circle cx="36" cy="11" r="3" fill="#FFC857" stroke="#1A1A2E" strokeWidth="2"/>
+          </svg>
+          <div className="leading-tight">
+            <span className="font-display text-base font-bold text-ink block">Mimoune <span className="text-blue">Kenza</span></span>
+            <span className="text-[9px] font-bold text-coral tracking-wider uppercase block -mt-0.5">English Teacher</span>
+          </div>
+        </div>
       </div>
     </>
   );
