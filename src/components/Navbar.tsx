@@ -47,16 +47,16 @@ export default function Navbar({
     return (
       <header className="navbar fixed top-0 left-0 w-full z-50 py-3 bg-cream/92 backdrop-blur-md border-b-3 border-ink">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 no-underline">
-            <div className="w-10 h-10 rounded-xl bg-blue border-3 border-ink flex items-center justify-center text-white font-display font-bold text-sm">M</div>
+          <Link href="/" className="flex items-center gap-3 no-underline group">
+            <svg width="46" height="46" viewBox="0 0 46 46" fill="none" className="flex-shrink-0">
+              <rect x="2" y="2" width="42" height="42" rx="14" fill="#2D5BFF" stroke="#1A1A2E" strokeWidth="3" transform="rotate(-4 23 23)"/>
+              <path d="M12 30V16L17 21L22 16V30" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" transform="rotate(-4 23 23)"/>
+              <path d="M25 16V30M25 23L32 16M25 23L32 30" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" transform="rotate(-4 23 23)"/>
+              <circle cx="36" cy="11" r="3" fill="#FFC857" stroke="#1A1A2E" strokeWidth="2"/>
+            </svg>
             <span className="font-display text-lg font-bold text-ink">Mon espace</span>
           </Link>
           <div className="flex items-center gap-4">
-            {showFiches && (
-              <Link href="/fiches-pedagogiques" className="font-display text-sm font-bold text-ink bg-mint-light px-4 py-2 rounded-full border-2 border-ink no-underline hover:bg-mint hover:text-white transition-all">
-                <i className="fa-solid fa-file-pen mr-1"></i> Fiches
-              </Link>
-            )}
             {role === "admin" && (
               <Link href="/admin" className="font-display text-sm font-bold text-ink bg-sun px-4 py-2 rounded-full border-2 border-ink no-underline">
                 <i className="fa-solid fa-cog mr-1"></i> Admin
