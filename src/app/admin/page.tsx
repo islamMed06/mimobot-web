@@ -132,8 +132,8 @@ export default function AdminDashboard() {
                           const bgMap: Record<string, string> = {
                             "1AM": "bg-mint-light border-mint text-mint",
                             "2AM": "bg-blue-light border-blue text-blue",
-                            "3AM": "bg-sun-light border-sun text-ink",
-                            "4AM": "bg-coral-light border-coral text-coral",
+                            "3AM": "bg-coral-light border-coral text-coral",
+                            "4AM": "bg-ink border-ink text-cream",
                           };
                           const cellStyle = level ? bgMap[level] || "bg-blue-light border-blue text-blue" : "";
                           return (
