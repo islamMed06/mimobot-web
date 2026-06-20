@@ -33,8 +33,10 @@ export async function middleware(request: NextRequest) {
   const isAdminRoute = path.startsWith("/admin");
   const isPremiumRoute = path.startsWith("/premium");
   const isFichesRoute = path.startsWith("/fiches-pedagogiques");
+  const isLessonsRoute = path.startsWith("/lessons");
+  const isExercisesRoute = path.startsWith("/exercises");
 
-  if (!user && (isAdminRoute || isPremiumRoute || isFichesRoute)) {
+  if (!user && (isAdminRoute || isPremiumRoute || isFichesRoute || isLessonsRoute || isExercisesRoute)) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("redirect", path);
