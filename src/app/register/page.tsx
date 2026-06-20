@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase";
 import Link from "next/link";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const supabase = createClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -21,38 +19,25 @@ export default function RegisterPage() {
     setLoading(true);
     setError("");
 
-    const { data, error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { full_name: fullName } },
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, fullName, userType }),
     });
 
-    if (signUpError) {
+    const data = await res.json();
+
+    if (!res.ok) {
+      const msg = data.error;
       setError(
-        signUpError.message === "User already registered"
+        msg?.includes("already exists") || msg?.includes("already registered")
           ? "Cet email est déjà inscrit"
-          : signUpError.message === "Password should be at least 6 characters"
+          : msg?.includes("Password should be at least 6 characters")
             ? "Le mot de passe doit faire au moins 6 caractères"
-            : signUpError.message
+            : "Erreur lors de l'inscription"
       );
       setLoading(false);
       return;
-    }
-
-    if (data.user) {
-      const { error: profileError } = await supabase.from("profiles").insert({
-        id: data.user.id,
-        email: data.user.email!,
-        full_name: fullName || null,
-        role: "free",
-        user_type: userType,
-      });
-
-      if (profileError) {
-        setError("Erreur lors de la création du profil");
-        setLoading(false);
-        return;
-      }
     }
 
     setSuccess(true);
