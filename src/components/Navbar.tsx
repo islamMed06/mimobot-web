@@ -96,7 +96,7 @@ export default function Navbar({
             <a href="#apropos" className="nav-link text-ink no-underline text-base">À propos</a>
             <a href="#ressources" className="nav-link text-ink no-underline text-base">Ressources</a>
             <a href="#eleves" className="nav-link text-ink no-underline text-base">Coin des élèves</a>
-            {showFiches && <Link href="/fiches-pedagogiques" className="nav-link text-ink no-underline text-base">Fiche pédagogique</Link>}
+            {showFiches && <a href="#fiches" className="nav-link text-ink no-underline text-base">Fiche pédagogique</a>}
           </nav>
 
           <div className="flex items-center gap-4">
@@ -130,9 +130,9 @@ export default function Navbar({
             </a>
           ))}
           {showFiches && (
-            <Link href="/fiches-pedagogiques" onClick={() => setMobileOpen(false)} className="block py-3 font-display font-semibold text-base border-b-2 border-dashed border-ink/25 no-underline text-ink">
+            <a href="#fiches" onClick={() => setMobileOpen(false)} className="block py-3 font-display font-semibold text-base border-b-2 border-dashed border-ink/25 no-underline text-ink">
               📋 Fiche pédagogique
-            </Link>
+            </a>
           )}
         </div>
       </header>

@@ -405,6 +405,108 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===================== FICHES PÉDAGOGIQUES ===================== */}
+      <section id="fiches" className="py-20 md:py-28 relative overflow-hidden bg-cream">
+        <div className="blob bg-coral w-96 h-96 top-1/4 -left-48 opacity-30"></div>
+        <div className="blob bg-blue-light w-72 h-72 bottom-1/4 -right-36 opacity-30"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-16">
+            <p className="text-coral font-display font-bold text-sm tracking-widest uppercase mb-2">
+              <i className="fa-solid fa-file-pen mr-2"></i> Fiches Pédagogiques
+            </p>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-ink">
+              Fiches <span className="squiggle-underline text-blue">Premium</span>
+            </h2>
+            <p className="text-ink/60 mt-4 max-w-xl mx-auto">
+              Documents premium classés par niveau pour approfondir chaque leçon — résumés, exercices ciblés et bien plus.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                level: "1AM", label: "1ère AM",
+                icon: "fa-solid fa-seedling", color: "bg-mint", bg: "bg-mint-light",
+                btnClass: "bg-white hover:bg-mint",
+                count: "4 fiches", desc: "Alphabet, couleurs, nombres — des fiches illustrées pour bien démarrer.",
+                fiches: [
+                  { title: "Fiche : Alphabet & Phonics", color: "text-mint" },
+                  { title: "Fiche : Colours & Numbers", color: "text-mint" },
+                ],
+              },
+              {
+                level: "2AM", label: "2ème AM",
+                icon: "fa-solid fa-book", color: "bg-blue", bg: "bg-blue-light",
+                iconColor: "text-white", btnClass: "bg-white hover:bg-blue hover:text-white",
+                count: "5 fiches", desc: "Present Simple, prépositions, décrire une personne — des résumés clairs et concis.",
+                fiches: [
+                  { title: "Fiche : Present Simple", color: "text-blue" },
+                  { title: "Fiche : Daily Routine", color: "text-blue" },
+                ],
+              },
+              {
+                level: "3AM", label: "3ème AM",
+                icon: "fa-solid fa-brain", color: "bg-coral", bg: "bg-coral-light",
+                iconColor: "text-white", btnClass: "bg-white hover:bg-coral hover:text-white",
+                count: "6 fiches", desc: "Past Simple, comparatifs, météo — des fiches pour consolider les acquis.",
+                fiches: [
+                  { title: "Fiche : Past Simple", color: "text-coral" },
+                  { title: "Fiche : Weather Vocabulary", color: "text-coral" },
+                ],
+              },
+              {
+                level: "4AM", label: "4ème AM",
+                icon: "fa-solid fa-trophy", color: "bg-ink", bg: "bg-sun",
+                iconColor: "text-sun", btnClass: "bg-ink text-cream hover:bg-coral",
+                count: "8 fiches", desc: "Révision BEM, rédaction, compréhension écrite — les essentiels pour le brevet.",
+                special: "BEM 🏆",
+                fiches: [
+                  { title: "Guide : Révision BEM", color: "text-ink" },
+                  { title: "Writing : Essay Structure", color: "text-ink" },
+                ],
+              },
+            ].map((niveau, i) => (
+              <div key={niveau.level} className={`sticker tilt-${i + 1} rounded-2xl p-6 ${niveau.bg} relative`}>
+                {niveau.special && (
+                  <div className="absolute -top-4 -right-4 bg-ink text-sun font-display font-bold text-xs px-3 py-1.5 rounded-full border-3 border-ink rotate-6">
+                    {niveau.special}
+                  </div>
+                )}
+                <div className={`w-12 h-12 rounded-xl ${niveau.color} border-3 border-ink ${niveau.iconColor || "text-ink"} flex items-center justify-center text-xl mb-4 ${i % 2 === 0 ? "-rotate-3" : "rotate-3"}`}>
+                  <i className={niveau.icon}></i>
+                </div>
+                <h3 className="font-display text-xl font-bold text-ink mb-1">{niveau.label}</h3>
+                <p className="text-xs text-ink/50 mb-4 font-semibold uppercase tracking-wide">{niveau.count}</p>
+                <p className="text-sm text-ink/70 mb-5">{niveau.desc}</p>
+                <ul className="space-y-2 text-sm">
+                  {niveau.fiches.map((f) => (
+                    <li key={f.title}>
+                      <Link
+                        href={`/fiches-pedagogiques?level=${niveau.level}`}
+                        className={`resource-link flex items-center gap-2 text-ink no-underline font-medium py-1.5 px-2 rounded-lg ${f.color}`}
+                      >
+                        <i className="fa-regular fa-file-pdf text-coral"></i> {f.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href={`/fiches-pedagogiques?level=${niveau.level}`}
+                  className={`mt-5 w-full font-display text-sm font-bold ${niveau.btnClass} py-2.5 rounded-xl border-3 border-ink transition-all flex items-center justify-center gap-1 no-underline`}
+                >
+                  Voir tout <i className="fa-solid fa-arrow-right text-xs"></i>
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-center text-ink/40 text-sm mt-12 font-medium">
+            <i className="fa-solid fa-crown mr-2"></i>
+            Contenu premium — <Link href="/login" className="text-blue font-bold hover:underline">Connecte-toi</Link> pour y accéder
+          </p>
+        </div>
+      </section>
+
       {/* ===================== STUDENT CORNER ===================== */}
       <section
         id="eleves"
@@ -758,6 +860,7 @@ export default function HomePage() {
                   "#accueil",
                   "#apropos",
                   "#ressources",
+                  "#fiches",
                   "#eleves",
                   "#contact",
                 ].map((href) => (
@@ -769,6 +872,7 @@ export default function HomePage() {
                       {href === "#accueil" && "Accueil"}
                       {href === "#apropos" && "À propos"}
                       {href === "#ressources" && "Ressources"}
+                      {href === "#fiches" && "Fiches pédagogiques"}
                       {href === "#eleves" && "Coin des élèves"}
                       {href === "#contact" && "Contact"}
                     </a>
