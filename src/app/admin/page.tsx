@@ -128,7 +128,7 @@ export default function AdminDashboard() {
                           {row.time}
                         </td>
                         {row.slots.map((cell, j) => {
-                          const level = cell.match(/^(\w+)/)?.[1] || "";
+                          const level = cell.match(/^(1AM|2AM|3AM|4AM)/)?.[1] || "";
                           const bgMap: Record<string, string> = {
                             "1AM": "bg-mint-light border-mint text-mint",
                             "2AM": "bg-blue-light border-blue text-blue",
