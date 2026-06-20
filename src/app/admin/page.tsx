@@ -28,7 +28,7 @@ export default async function AdminDashboard() {
   const cards = [
     { label: "Leçons", count: stats.lessons, href: "/admin/lessons", color: "bg-blue-50 text-blue-700" },
     { label: "Exercices", count: stats.exercises, href: "/admin/exercises", color: "bg-green-50 text-green-700" },
-    { label: "Ressources", count: stats.resources, href: "/admin/resources", color: "bg-purple-50 text-purple-700" },
+    { label: "Fiches pédagogiques", count: stats.resources, href: "/admin/resources", color: "bg-purple-50 text-purple-700" },
   ];
 
   return (
