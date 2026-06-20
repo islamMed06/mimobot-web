@@ -20,7 +20,12 @@ export async function GET() {
     .eq("id", 1)
     .single();
 
-  if (error || !data) {
+  if (error || !data || !Array.isArray(data.schedule_data) || data.schedule_data.length === 0) {
+    const supabase2 = getSupabaseClient();
+    await supabase2.from("teacher_schedule").upsert(
+      { id: 1, schedule_data: DEFAULT_SCHEDULE, updated_at: new Date().toISOString() },
+      { onConflict: "id" }
+    );
     return NextResponse.json({ schedule: DEFAULT_SCHEDULE });
   }
 
