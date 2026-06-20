@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const DAYS = ["Samedi", "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi"];
+const DAYS = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"];
 
 type Row = { time: string; slots: string[] };
 
@@ -34,7 +34,7 @@ export default function AdminDashboard() {
     const data = await res.json();
     setSaving(false);
     if (data.success) setEditing(false);
-    else alert(data.error || "Erreur lors de la sauvegarde");
+    else alert(data.error || "Error saving schedule");
   };
 
   const updateCell = (rowIdx: number, colIdx: number, value: string) => {
@@ -57,14 +57,14 @@ export default function AdminDashboard() {
   };
 
   const cards = [
-    { label: "Leçons", count: stats.lessons, href: "/admin/lessons", color: "bg-blue-50 text-blue-700" },
-    { label: "Exercices", count: stats.exercises, href: "/admin/exercises", color: "bg-green-50 text-green-700" },
-    { label: "Fiches pédagogiques", count: stats.resources, href: "/admin/resources", color: "bg-purple-50 text-purple-700" },
+    { label: "Lessons", count: stats.lessons, href: "/admin/lessons", color: "bg-blue-50 text-blue-700" },
+    { label: "Exercises", count: stats.exercises, href: "/admin/exercises", color: "bg-green-50 text-green-700" },
+    { label: "Resources", count: stats.resources, href: "/admin/resources", color: "bg-purple-50 text-purple-700" },
   ];
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Tableau de bord</h1>
+      <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
         {cards.map((c) => (
@@ -78,22 +78,22 @@ export default function AdminDashboard() {
       <div className="sticker rounded-2xl p-6 mb-10">
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-display text-xl font-bold text-ink flex items-center gap-2">
-            <i className="fa-solid fa-calendar-days text-sun"></i> Emploi du temps
+            <i className="fa-solid fa-calendar-days text-sun"></i> Schedule
           </h2>
           <div className="flex items-center gap-2">
             {editing ? (
               <>
                 <button onClick={() => { setEditing(false); fetch("/api/admin/schedule").then(r => r.json()).then(d => setSchedule(d.schedule)); }}
-                  className="btn-outline text-xs !py-2 !px-4">Annuler</button>
+                  className="btn-outline text-xs !py-2 !px-4">Cancel</button>
                 <button onClick={handleSave} disabled={saving}
                   className="btn-primary text-xs !py-2 !px-4" style={{ fontSize: "0.75rem", padding: "8px 16px" }}>
-                  {saving ? "Sauvegarde..." : <><i className="fa-regular fa-floppy-disk"></i> Enregistrer</>}
+                  {saving ? "Saving..." : <><i className="fa-regular fa-floppy-disk"></i> Save</>}
                 </button>
               </>
             ) : (
               <button onClick={() => setEditing(true)}
                 className="btn-outline text-xs !py-2 !px-4">
-                <i className="fa-regular fa-pen-to-square"></i> Modifier
+                <i className="fa-regular fa-pen-to-square"></i> Edit
               </button>
             )}
           </div>
@@ -102,7 +102,7 @@ export default function AdminDashboard() {
         {loading ? (
           <div className="text-center py-12">
             <div className="text-4xl mb-3 animate-pulse">📅</div>
-            <p className="font-display text-ink/40 text-lg">Chargement de l'emploi du temps...</p>
+            <p className="font-display text-ink/40 text-lg">Loading schedule...</p>
           </div>
         ) : (
           <>
@@ -110,7 +110,7 @@ export default function AdminDashboard() {
               <table className="w-full text-sm" style={{ borderCollapse: "separate", borderSpacing: "6px" }}>
                 <thead>
                   <tr>
-                    <th className="font-display font-bold text-ink/50 text-xs text-left px-3 py-2 min-w-[90px]">Horaire</th>
+                    <th className="font-display font-bold text-ink/50 text-xs text-left px-3 py-2 min-w-[90px]">Time</th>
                     {DAYS.map((d) => (
                       <th key={d} className="font-display font-bold text-ink text-xs text-center px-3 py-2 min-w-[100px] bg-sun-light rounded-xl border-2 border-ink">
                         {d}
@@ -156,7 +156,7 @@ export default function AdminDashboard() {
                         {editing && (
                           <td className="p-1 text-center">
                             {schedule.length > 1 && (
-                              <button onClick={() => removeRow(i)} className="w-8 h-8 rounded-xl border-2 border-coral bg-coral-light text-coral hover:bg-coral hover:text-white transition-colors text-sm" title="Supprimer ce créneau">
+                              <button onClick={() => removeRow(i)} className="w-8 h-8 rounded-xl border-2 border-coral bg-coral-light text-coral hover:bg-coral hover:text-white transition-colors text-sm" title="Delete this slot">
                                 <i className="fa-solid fa-xmark"></i>
                               </button>
                             )}
@@ -171,13 +171,13 @@ export default function AdminDashboard() {
             {editing && (
               <div className="flex justify-center mt-4 gap-3 flex-wrap">
                 <button onClick={addRow} className="btn-outline text-xs !py-2 !px-5">
-                  <i className="fa-solid fa-plus"></i> Ajouter un créneau
+                  <i className="fa-solid fa-plus"></i> Add time slot
                 </button>
               </div>
             )}
             {!editing && (
               <p className="text-center mt-4 text-xs text-ink/30 font-display">
-                <i className="fa-regular fa-clock mr-1"></i> Cliquez sur "Modifier" pour mettre à jour votre emploi du temps
+                <i className="fa-regular fa-clock mr-1"></i> Click "Edit" to update your schedule
               </p>
             )}
           </>
