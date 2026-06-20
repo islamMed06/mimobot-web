@@ -121,10 +121,10 @@ export default function AdminDashboard() {
                 </thead>
                 <tbody>
                   {schedule.map((row, i) => {
-                    const rotate = i % 2 === 0 ? "tilt-1" : "tilt-2";
+                    const timeBg = i % 2 === 0 ? "bg-sun-light" : "bg-white";
                     return (
-                      <tr key={i} className={rotate}>
-                        <td className="font-display font-bold text-ink bg-white rounded-xl border-2 border-ink px-3 py-3 text-xs text-center shadow-[2px_2px_0px_#1A1A2E]">
+                      <tr key={i}>
+                        <td className={`font-display font-bold text-ink rounded-xl border-2 border-ink px-3 py-3 text-xs text-center shadow-[2px_2px_0px_#1A1A2E] ${timeBg}`}>
                           {row.time}
                         </td>
                         {row.slots.map((cell, j) => {
