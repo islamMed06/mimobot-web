@@ -63,7 +63,7 @@ export default function RegisterPage() {
               <i className="fa-solid fa-circle-check text-mint text-4xl mb-3"></i>
               <h2 className="font-display font-bold text-ink text-lg mb-2">Inscription réussie !</h2>
               <p className="text-sm text-ink/60 mb-4">
-                Vérifie ta boîte email <strong>{email}</strong> et confirme ton compte avant de te connecter.
+                Ton compte est créé ! Tu peux te connecter dès maintenant.
               </p>
               <Link href="/login" className="btn-primary inline-flex">
                 <i className="fa-regular fa-arrow-right-to-bracket"></i> Se connecter
