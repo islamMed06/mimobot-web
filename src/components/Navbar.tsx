@@ -95,8 +95,8 @@ export default function Navbar({
             <a href="#accueil" className="nav-link text-ink no-underline text-base active">Accueil</a>
             <a href="#apropos" className="nav-link text-ink no-underline text-base">À propos</a>
             <a href="#ressources" className="nav-link text-ink no-underline text-base">Ressources</a>
-            <a href="#eleves" className="nav-link text-ink no-underline text-base">Coin des élèves</a>
             {showFiches && <a href="#fiches" className="nav-link text-ink no-underline text-base">Fiche pédagogique</a>}
+            <a href="#eleves" className="nav-link text-ink no-underline text-base">Coin des élèves</a>
           </nav>
 
           <div className="flex items-center gap-4">
@@ -123,7 +123,6 @@ export default function Navbar({
             { href: "#accueil", label: "Accueil", icon: "🏠" },
             { href: "#apropos", label: "À propos", icon: "👩‍🏫" },
             { href: "#ressources", label: "Ressources", icon: "📚" },
-            { href: "#eleves", label: "Coin des élèves", icon: "🎓" },
           ].map((l) => (
             <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)} className="block py-3 font-display font-semibold text-base border-b-2 border-dashed border-ink/25 no-underline text-ink">
               {l.icon} {l.label}
@@ -134,6 +133,9 @@ export default function Navbar({
               📋 Fiche pédagogique
             </a>
           )}
+          <a href="#eleves" onClick={() => setMobileOpen(false)} className="block py-3 font-display font-semibold text-base border-b-2 border-dashed border-ink/25 no-underline text-ink">
+            🎓 Coin des élèves
+          </a>
         </div>
       </header>
     );
