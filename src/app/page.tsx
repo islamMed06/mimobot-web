@@ -136,7 +136,7 @@ export default function HomePage() {
       {/* ===================== ABOUT ===================== */}
       <section
         id="apropos"
-        className="py-20 md:py-28 bg-white relative border-y-3 border-ink"
+        className="py-16 md:py-20 bg-white relative border-y-3 border-ink scroll-mt-24"
       >
         <div className="blob bg-sun w-72 h-72 absolute -top-20 -right-20 opacity-40"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -264,7 +264,7 @@ export default function HomePage() {
       {/* ===================== RESSOURCES ===================== */}
       <section
         id="ressources"
-        className="py-20 md:py-28 relative overflow-hidden"
+        className="py-20 md:py-28 relative overflow-hidden scroll-mt-24"
       >
         <div className="blob bg-blue-light w-96 h-96 top-1/4 -right-48 opacity-80"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -406,7 +406,7 @@ export default function HomePage() {
       </section>
 
       {/* ===================== FICHES PÉDAGOGIQUES ===================== */}
-      <section id="fiches" className="py-20 md:py-28 relative overflow-hidden bg-cream">
+      <section id="fiches" className="py-20 md:py-28 relative overflow-hidden bg-cream scroll-mt-24">
         <div className="blob bg-coral w-96 h-96 top-1/4 -left-48 opacity-30"></div>
         <div className="blob bg-blue-light w-72 h-72 bottom-1/4 -right-36 opacity-30"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -510,7 +510,7 @@ export default function HomePage() {
       {/* ===================== STUDENT CORNER ===================== */}
       <section
         id="eleves"
-        className="py-20 md:py-28 bg-ink text-cream relative overflow-hidden border-y-3 border-ink"
+        className="py-20 md:py-28 bg-ink text-cream relative overflow-hidden border-y-3 border-ink scroll-mt-24"
       >
         <div className="blob bg-mint w-80 h-80 -bottom-20 -right-20 opacity-20"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -668,7 +668,7 @@ export default function HomePage() {
       </section>
 
       {/* ===================== CONTACT ===================== */}
-      <section id="contact" className="py-20 md:py-28 relative overflow-hidden">
+      <section id="contact" className="py-20 md:py-28 relative overflow-hidden scroll-mt-24">
         <div className="blob bg-sun w-80 h-80 -top-32 -left-32 opacity-50"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-10">
