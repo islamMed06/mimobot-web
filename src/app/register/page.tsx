@@ -28,7 +28,12 @@ export default function RegisterPage() {
     const data = await res.json();
 
     if (!res.ok) {
-      setError(data.error || "Erreur lors de l'inscription");
+      const msg = data.error || "";
+      if (msg.includes("already registered") || msg.includes("email_exists")) {
+        setError("Cet email est déjà inscrit");
+      } else {
+        setError(msg || "Erreur lors de l'inscription");
+      }
       setLoading(false);
       return;
     }
