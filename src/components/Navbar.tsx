@@ -106,7 +106,7 @@ export default function Navbar({
               </Link>
             ) : (
               <Link href="/login" className="hidden md:inline-flex items-center gap-2 font-display bg-white text-ink text-sm font-bold px-4 py-2.5 rounded-full border-2 border-ink hover:bg-ink hover:text-cream transition-all no-underline">
-                <i className="fa-regular fa-user"></i> Espace élève
+                <i className="fa-regular fa-user"></i> Mon espace
               </Link>
             )}
             <a href="#contact" className="hidden md:inline-flex items-center gap-2 font-display bg-coral text-white text-sm font-bold px-5 py-2.5 rounded-full border-2 border-ink shadow-[3px_3px_0px_#1A1A2E] hover:shadow-[5px_5px_0px_#1A1A2E] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all no-underline">
