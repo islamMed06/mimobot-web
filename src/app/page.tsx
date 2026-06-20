@@ -136,7 +136,7 @@ export default function HomePage() {
       {/* ===================== ABOUT ===================== */}
       <section
         id="apropos"
-        className="py-20 md:py-28 bg-white relative border-y-3 border-ink"
+        className="pt-28 md:pt-36 pb-20 md:pb-28 bg-white relative border-y-3 border-ink"
       >
         <div className="blob bg-sun w-72 h-72 absolute -top-20 -right-20 opacity-40"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -510,7 +510,7 @@ export default function HomePage() {
       {/* ===================== STUDENT CORNER ===================== */}
       <section
         id="eleves"
-        className="py-20 md:py-28 bg-ink text-cream relative overflow-hidden border-y-3 border-ink"
+        className="pt-28 md:pt-36 pb-20 md:pb-28 bg-ink text-cream relative overflow-hidden border-y-3 border-ink"
       >
         <div className="blob bg-mint w-80 h-80 -bottom-20 -right-20 opacity-20"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
