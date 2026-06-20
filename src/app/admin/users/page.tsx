@@ -86,23 +86,25 @@ export default function AdminUsersPage() {
                 </td>
                 <td className="p-3 text-center text-ink/50 text-xs">{new Date(u.created_at).toLocaleDateString()}</td>
                 <td className="p-3 text-center">
-                  <div className="flex items-center justify-center gap-2">
-                    {u.role !== "admin" && u.user_type !== "student" && (
-                      <button
-                        onClick={() => togglePremium(u)}
-                        className={`font-display font-bold text-xs px-4 py-1.5 rounded-full border-2 border-ink transition-all cursor-pointer ${
-                          u.role === "premium"
-                            ? "bg-coral text-white hover:bg-coral-light hover:text-ink"
-                            : "bg-mint text-white hover:bg-mint-light hover:text-ink"
-                        }`}
-                      >
-                        {u.role === "premium" ? "Rétrograder" : "Passer Premium"}
-                      </button>
-                    )}
+                  <div className="flex items-center justify-center gap-1 min-w-[130px] mx-auto">
+                    <div className={`min-w-[100px] ${u.role !== "admin" && u.user_type !== "student" ? "" : "invisible"}`}>
+                      {u.role !== "admin" && u.user_type !== "student" && (
+                        <button
+                          onClick={() => togglePremium(u)}
+                          className={`font-display font-bold text-xs px-3 py-1.5 rounded-full border-2 border-ink transition-all cursor-pointer whitespace-nowrap ${
+                            u.role === "premium"
+                              ? "bg-coral text-white hover:bg-coral-light hover:text-ink"
+                              : "bg-mint text-white hover:bg-mint-light hover:text-ink"
+                          }`}
+                        >
+                          {u.role === "premium" ? "Rétrograder" : "Premium"}
+                        </button>
+                      )}
+                    </div>
                     {u.role !== "admin" && (
                       <button
                         onClick={() => deleteUser(u)}
-                        className="font-display font-bold text-xs px-3 py-1.5 rounded-full border-2 border-coral/50 text-coral hover:bg-coral hover:text-white transition-all cursor-pointer"
+                        className="font-display font-bold text-xs w-8 h-8 rounded-full border-2 border-coral/50 text-coral hover:bg-coral hover:text-white transition-all cursor-pointer flex items-center justify-center"
                       >
                         <i className="fa-solid fa-trash-can"></i>
                       </button>
