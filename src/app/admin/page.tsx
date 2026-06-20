@@ -22,20 +22,8 @@ async function getStats() {
   };
 }
 
-async function checkBotStatus() {
-  try {
-    const res = await fetch(`${process.env.AGENT_URL || "https://mimo-bot-ukhy.onrender.com"}/health`, {
-      signal: AbortSignal.timeout(5000),
-    });
-    return res.ok;
-  } catch {
-    return false;
-  }
-}
-
 export default async function AdminDashboard() {
   const stats = await getStats();
-  const botOnline = await checkBotStatus();
 
   const cards = [
     { label: "Leçons", count: stats.lessons, href: "/admin/lessons", color: "bg-blue-50 text-blue-700" },
@@ -65,13 +53,7 @@ export default async function AdminDashboard() {
         </p>
       </div>
 
-      <div className="mt-6 bg-white rounded-xl border border-gray-200 p-5 flex items-center gap-3">
-        <span className={`w-3 h-3 rounded-full ${botOnline ? "bg-green-500" : "bg-red-500"}`}></span>
-        <span className="text-sm font-medium text-gray-700">
-          {botOnline ? "Connecté" : "Déconnecté"}
-        </span>
-        <span className="text-sm text-gray-400">@MimoBot_bot</span>
-      </div>
+
     </div>
   );
 }
