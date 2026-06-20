@@ -44,7 +44,10 @@ export default function AdminDashboard() {
   };
 
   const addRow = () => {
-    setSchedule([...schedule, { time: "15:00 – 16:00", slots: ["", "", "", "", "", ""] }]);
+    const last = schedule[schedule.length - 1];
+    const endHour = last ? parseInt(last.time.split(" – ")[1]) + 1 : 16;
+    const time = `${String(endHour - 1).padStart(2, "0")}:00 – ${String(endHour).padStart(2, "0")}:00`;
+    setSchedule([...schedule, { time, slots: ["", "", "", "", "", ""] }]);
   };
 
   const removeRow = (idx: number) => {
