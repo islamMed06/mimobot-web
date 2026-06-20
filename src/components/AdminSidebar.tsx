@@ -10,7 +10,6 @@ const links = [
   { href: "/admin/exercises", label: "Exercices", icon: "E" },
   { href: "/admin/resources", label: "Fiches pédagogiques", icon: "F" },
   { href: "/admin/users", label: "Utilisateurs", icon: "U" },
-  { href: "/admin/bot", label: "Bot", icon: "B" },
   { href: "/admin/profile", label: "Profil", icon: "P" },
 ];
 
