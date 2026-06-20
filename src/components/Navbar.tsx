@@ -145,7 +145,12 @@ export default function Navbar({
     <header className="fixed top-0 left-0 w-full z-50 py-3 bg-cream/92 backdrop-blur-md border-b-3 border-ink">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 no-underline group">
-          <div className="w-10 h-10 rounded-xl bg-blue border-3 border-ink flex items-center justify-center text-white font-display font-bold text-sm">M</div>
+          <svg width="46" height="46" viewBox="0 0 46 46" fill="none" className="flex-shrink-0">
+            <rect x="2" y="2" width="42" height="42" rx="14" fill="#2D5BFF" stroke="#1A1A2E" strokeWidth="3" transform="rotate(-4 23 23)"/>
+            <path d="M12 30V16L17 21L22 16V30" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" transform="rotate(-4 23 23)"/>
+            <path d="M25 16V30M25 23L32 16M25 23L32 30" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" transform="rotate(-4 23 23)"/>
+            <circle cx="36" cy="11" r="3" fill="#FFC857" stroke="#1A1A2E" strokeWidth="2"/>
+          </svg>
           <div className="leading-tight">
             <span className="font-display text-lg font-bold text-ink block">Mimoune <span className="text-blue">Kenza</span></span>
           </div>
