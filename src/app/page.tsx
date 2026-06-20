@@ -136,11 +136,11 @@ export default function HomePage() {
       {/* ===================== ABOUT ===================== */}
       <section
         id="apropos"
-        className="pt-28 md:pt-36 pb-20 md:pb-28 bg-white relative border-y-3 border-ink"
+        className="py-20 md:py-28 bg-white relative border-y-3 border-ink"
       >
         <div className="blob bg-sun w-72 h-72 absolute -top-20 -right-20 opacity-40"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <p className="text-coral font-display font-bold text-sm tracking-widest uppercase mb-2">
               <i className="fa-solid fa-id-card mr-2"></i> About me
             </p>
@@ -150,7 +150,7 @@ export default function HomePage() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
             <div className="flex justify-center order-2 md:order-1">
               <div className="relative">
                 <div className="w-72 h-72 rounded-[2.5rem] bg-sun border-4 border-ink shadow-[10px_10px_0px_#1A1A2E] flex items-center justify-center -rotate-3">
@@ -221,7 +221,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mt-20">
+          <div className="grid md:grid-cols-3 gap-8 mt-12">
             {[
               {
                 icon: "fa-solid fa-heart",
@@ -510,11 +510,11 @@ export default function HomePage() {
       {/* ===================== STUDENT CORNER ===================== */}
       <section
         id="eleves"
-        className="pt-28 md:pt-36 pb-20 md:pb-28 bg-ink text-cream relative overflow-hidden border-y-3 border-ink"
+        className="py-20 md:py-28 bg-ink text-cream relative overflow-hidden border-y-3 border-ink"
       >
         <div className="blob bg-mint w-80 h-80 -bottom-20 -right-20 opacity-20"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <p className="text-sun font-display font-bold text-sm tracking-widest uppercase mb-2">
               <i className="fa-solid fa-graduation-cap mr-2"></i> Student
               Corner
@@ -530,14 +530,14 @@ export default function HomePage() {
 
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Conseils */}
-            <div className="bg-cream text-ink rounded-2xl p-8 border-3 border-cream/20 tilt-1">
-              <div className="w-14 h-14 rounded-full bg-mint border-3 border-ink text-ink flex items-center justify-center text-2xl mb-5">
+            <div className="bg-cream text-ink rounded-2xl p-6 border-3 border-cream/20 tilt-1">
+              <div className="w-12 h-12 rounded-full bg-mint border-3 border-ink text-ink flex items-center justify-center text-xl mb-4">
                 <i className="fa-solid fa-lightbulb"></i>
               </div>
-              <h3 className="font-display text-xl font-bold text-ink mb-4">
+              <h3 className="font-display text-lg font-bold text-ink mb-3">
                 Conseils pour progresser
               </h3>
-              <ul className="space-y-4 text-sm text-ink/70">
+              <ul className="space-y-3 text-sm text-ink/70">
                 {[
                   {
                     icon: "fa-solid fa-headphones",
@@ -579,11 +579,11 @@ export default function HomePage() {
             </div>
 
             {/* Vocabulaire */}
-            <div className="bg-cream text-ink rounded-2xl p-8 border-3 border-cream/20 tilt-2">
-              <div className="w-14 h-14 rounded-full bg-sun border-3 border-ink text-ink flex items-center justify-center text-2xl mb-5">
+            <div className="bg-cream text-ink rounded-2xl p-6 border-3 border-cream/20 tilt-2">
+              <div className="w-12 h-12 rounded-full bg-sun border-3 border-ink text-ink flex items-center justify-center text-xl mb-4">
                 <i className="fa-solid fa-book"></i>
               </div>
-              <h3 className="font-display text-xl font-bold text-ink mb-4">
+              <h3 className="font-display text-lg font-bold text-ink mb-3">
                 Vocabulaire utile
               </h3>
               <div className="space-y-3">
@@ -625,11 +625,11 @@ export default function HomePage() {
             </div>
 
             {/* Astuces BEM */}
-            <div className="bg-coral text-white rounded-2xl p-8 border-3 border-cream/20 tilt-3">
-              <div className="w-14 h-14 rounded-full bg-white border-3 border-ink text-coral flex items-center justify-center text-2xl mb-5">
+            <div className="bg-coral text-white rounded-2xl p-6 border-3 border-cream/20 tilt-3">
+              <div className="w-12 h-12 rounded-full bg-white border-3 border-ink text-coral flex items-center justify-center text-xl mb-4">
                 <i className="fa-solid fa-trophy"></i>
               </div>
-              <h3 className="font-display text-xl font-bold text-white mb-4">
+              <h3 className="font-display text-lg font-bold text-white mb-3">
                 Astuces pour le BEM
               </h3>
               <ul className="space-y-4 text-sm text-white/90">
