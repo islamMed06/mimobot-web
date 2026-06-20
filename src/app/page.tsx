@@ -671,7 +671,7 @@ export default function HomePage() {
       <section id="contact" className="py-20 md:py-28 relative overflow-hidden">
         <div className="blob bg-sun w-80 h-80 -top-32 -left-32 opacity-50"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <p className="text-coral font-display font-bold text-sm tracking-widest uppercase mb-2">
               <i className="fa-regular fa-paper-plane mr-2"></i> Contact
             </p>
@@ -685,9 +685,9 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
-            <div className="sticker rounded-2xl p-8 bg-white">
-              <form id="contact-form" className="space-y-6">
+          <div className="grid lg:grid-cols-2 gap-8">
+            <div className="sticker rounded-2xl p-6 bg-white">
+              <form id="contact-form" className="space-y-4">
                 <div>
                   <label className="block text-sm font-display font-bold text-ink mb-1.5">
                     <i className="fa-regular fa-user text-blue mr-1"></i> Nom
