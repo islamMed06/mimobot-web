@@ -58,7 +58,7 @@ export async function middleware(request: NextRequest) {
 
     if (isFichesRoute && profile?.user_type === "student") {
       const url = request.nextUrl.clone();
-      url.pathname = "/resources";
+      url.pathname = "/lessons";
       return NextResponse.redirect(url);
     }
   }

@@ -45,15 +45,44 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="font-semibold mb-3">Bienvenue sur MimoBot</h2>
-        <p className="text-sm text-gray-500 leading-relaxed">
-          Ce panneau d&apos;administration vous permet de gérer le contenu pédagogique
-          que vous partagez sur le site. Utilisez le menu à gauche pour ajouter, modifier
-          ou publier vos leçons, exercices et ressources.
-        </p>
+        <h2 className="font-semibold mb-4">Emploi du temps</h2>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr>
+                <th className="border border-gray-200 bg-gray-50 p-2 text-left font-semibold text-gray-600 min-w-[80px]">Horaire</th>
+                <th className="border border-gray-200 bg-gray-50 p-2 text-center font-semibold text-gray-600 min-w-[100px]">Samedi</th>
+                <th className="border border-gray-200 bg-gray-50 p-2 text-center font-semibold text-gray-600 min-w-[100px]">Dimanche</th>
+                <th className="border border-gray-200 bg-gray-50 p-2 text-center font-semibold text-gray-600 min-w-[100px]">Lundi</th>
+                <th className="border border-gray-200 bg-gray-50 p-2 text-center font-semibold text-gray-600 min-w-[100px]">Mardi</th>
+                <th className="border border-gray-200 bg-gray-50 p-2 text-center font-semibold text-gray-600 min-w-[100px]">Mercredi</th>
+                <th className="border border-gray-200 bg-gray-50 p-2 text-center font-semibold text-gray-600 min-w-[100px]">Jeudi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                { time: "08:00 – 09:00", slots: ["", "", "", "", "", ""] },
+                { time: "09:00 – 10:00", slots: ["4AM · Anglais", "", "3AM · Anglais", "", "2AM · Anglais", ""] },
+                { time: "10:00 – 11:00", slots: ["", "", "3AM · Anglais", "", "", ""] },
+                { time: "11:00 – 12:00", slots: ["4AM · Anglais", "", "", "", "2AM · Anglais", ""] },
+                { time: "12:00 – 13:00", slots: ["", "", "", "", "", ""] },
+                { time: "13:00 – 14:00", slots: ["", "1AM · Anglais", "", "1AM · Anglais", "", ""] },
+                { time: "14:00 – 15:00", slots: ["", "1AM · Anglais", "", "", "", ""] },
+              ].map((row, i) => (
+                <tr key={i}>
+                  <td className="border border-gray-200 p-2 text-gray-500 font-medium text-xs whitespace-nowrap">{row.time}</td>
+                  {row.slots.map((cell, j) => (
+                    <td key={j} className={`border border-gray-200 p-2 text-center ${cell ? "bg-blue-50 text-blue-700 font-medium text-xs rounded" : "text-gray-300 text-xs"}`}>
+                      {cell || "—"}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="text-xs text-gray-400 mt-3"><i className="fa-regular fa-pen-to-square mr-1"></i> Modifiable dans <code className="bg-gray-100 px-1 rounded">src/app/admin/page.tsx</code></p>
       </div>
-
-
     </div>
   );
 }

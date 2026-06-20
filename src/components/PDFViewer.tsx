@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 
-export default function PDFViewer({ resourceId, title }: { resourceId: string; title: string }) {
+export default function PDFViewer({ resourceId, title, contentType = "resource" }: { resourceId: string; title: string; contentType?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
@@ -32,7 +32,7 @@ export default function PDFViewer({ resourceId, title }: { resourceId: string; t
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`/api/pdf-proxy/${resourceId}`);
+        const res = await fetch(`/api/pdf-proxy/${resourceId}?type=${contentType}`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const buf = await res.arrayBuffer();
 

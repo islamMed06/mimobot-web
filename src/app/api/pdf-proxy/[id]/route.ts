@@ -1,10 +1,19 @@
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const { searchParams } = new URL(req.url);
+  const type = searchParams.get("type") || "resource";
+
+  const allowed = ["resource", "lesson", "exercise"];
+  if (!allowed.includes(type)) {
+    return new Response("Invalid type", { status: 400 });
+  }
+
+  const table = type === "resource" ? "resources" : `${type}s`;
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
   const supabaseKey = process.env.SUPABASE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-  const resp = await fetch(`${supabaseUrl}/rest/v1/resources?id=eq.${id}&select=file_url`, {
+  const resp = await fetch(`${supabaseUrl}/rest/v1/${table}?id=eq.${id}&select=file_url`, {
     headers: { apikey: supabaseKey, Authorization: `Bearer ${supabaseKey}` },
   });
 

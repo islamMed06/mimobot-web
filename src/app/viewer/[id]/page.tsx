@@ -4,8 +4,29 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PDFViewer from "@/components/PDFViewer";
 
-export default async function ViewerPage({ params }: { params: Promise<{ id: string }> }) {
+const TABLE_MAP: Record<string, string> = {
+  lesson: "lessons",
+  exercise: "exercises",
+  resource: "resources",
+};
+
+const BACKLINK_MAP: Record<string, string> = {
+  lesson: "/lessons",
+  exercise: "/exercises",
+  resource: "/fiches-pedagogiques",
+};
+
+export default async function ViewerPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ type?: string }>;
+}) {
   const { id } = await params;
+  const { type = "resource" } = await searchParams;
+  const table = TABLE_MAP[type] || "resources";
+
   const cookieStore = await cookies();
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -14,7 +35,7 @@ export default async function ViewerPage({ params }: { params: Promise<{ id: str
   );
 
   const { data: resource } = await supabase
-    .from("resources")
+    .from(table)
     .select("*")
     .eq("id", id)
     .single();
@@ -24,7 +45,9 @@ export default async function ViewerPage({ params }: { params: Promise<{ id: str
   const { data: { user } } = await supabase.auth.getUser();
   const { data: profile } = user ? await supabase.from("profiles").select("user_type").eq("id", user.id).single() : { data: null };
   const isStudent = profile?.user_type === "student";
-  const backLink = resource.price > 0 && !isStudent ? "/fiches-pedagogiques" : "/lessons";
+  const backLink = type === "resource" && resource.price > 0 && !isStudent
+    ? "/fiches-pedagogiques"
+    : BACKLINK_MAP[type] || "/lessons";
 
   return (
     <div className="min-h-screen bg-cream flex flex-col">
@@ -55,7 +78,7 @@ export default async function ViewerPage({ params }: { params: Promise<{ id: str
         </div>
       </header>
       <div className="flex-1 flex flex-col min-h-0" style={{ height: "calc(100vh - 64px)" }}>
-        <PDFViewer resourceId={id} title={resource.title} />
+        <PDFViewer resourceId={id} title={resource.title} contentType={type} />
       </div>
     </div>
   );

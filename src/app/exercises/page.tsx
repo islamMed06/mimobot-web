@@ -91,7 +91,7 @@ export default async function ExercisesPage({ searchParams }: { searchParams: Pr
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h2 className="font-display font-bold text-lg text-ink">{e.title}</h2>
-                  <div className="flex items-center gap-3 mt-3 text-xs font-semibold">
+                  <div className="flex items-center gap-3 mt-3 text-xs font-semibold flex-wrap">
                     <span className="bg-coral-light px-2 py-0.5 rounded border border-ink/20 flex items-center gap-1">
                       <i className={`${typeIcons[e.type] || "fa-regular fa-file"} text-coral`}></i>
                       {typeLabels[e.type] || e.type}
@@ -104,6 +104,12 @@ export default async function ExercisesPage({ searchParams }: { searchParams: Pr
                     )}
                   </div>
                 </div>
+                <a
+                  href={`/viewer/${e.id}?type=exercise`}
+                  className="font-display font-bold text-sm bg-blue text-white px-5 py-2.5 rounded-full border-2 border-ink shadow-[3px_3px_0px_#1A1A2E] hover:shadow-[5px_5px_0px_#1A1A2E] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all no-underline shrink-0 inline-flex items-center gap-2 self-center"
+                >
+                  <i className="fa-regular fa-eye"></i> Consulter
+                </a>
               </div>
             </div>
           ))}
