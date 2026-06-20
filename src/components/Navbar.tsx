@@ -153,6 +153,7 @@ export default function Navbar({
           </svg>
           <div className="leading-tight">
             <span className="font-display text-lg font-bold text-ink block">Mimoune <span className="text-blue">Kenza</span></span>
+            <span className="text-[10px] font-bold text-coral tracking-wider uppercase block -mt-0.5">English Teacher</span>
           </div>
         </Link>
         <nav className="hidden md:flex items-center gap-8">
