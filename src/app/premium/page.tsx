@@ -149,9 +149,6 @@ export default function PremiumPage() {
                 <Link href="/exercises" className="btn-primary">
                   <i className="fa-solid fa-pen"></i> Exercices
                 </Link>
-                <Link href="/resources" className="btn-primary">
-                  <i className="fa-solid fa-download"></i> Ressources
-                </Link>
               </div>
             </div>
           ) : isFreeTeacher ? (

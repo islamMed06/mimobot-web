@@ -154,7 +154,6 @@ export default function Navbar({
           <Link href="/" className={`nav-link text-ink no-underline text-base ${!active ? "active" : ""}`}>Accueil</Link>
           <Link href="/lessons" className={`nav-link text-ink no-underline text-base ${active === "lessons" ? "active" : ""}`}>Leçons</Link>
           <Link href="/exercises" className={`nav-link text-ink no-underline text-base ${active === "exercises" ? "active" : ""}`}>Exercices</Link>
-          <Link href="/resources" className={`nav-link text-ink no-underline text-base ${active === "resources" ? "active" : ""}`}>Ressources</Link>
           {showFiches && <Link href="/fiches-pedagogiques" className={`nav-link text-ink no-underline text-base ${active === "fiches" ? "active" : ""}`}>Fiche pédagogique</Link>}
         </nav>
       </div>

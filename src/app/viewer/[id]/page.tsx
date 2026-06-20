@@ -24,7 +24,7 @@ export default async function ViewerPage({ params }: { params: Promise<{ id: str
   const { data: { user } } = await supabase.auth.getUser();
   const { data: profile } = user ? await supabase.from("profiles").select("user_type").eq("id", user.id).single() : { data: null };
   const isStudent = profile?.user_type === "student";
-  const backLink = resource.price > 0 && !isStudent ? "/fiches-pedagogiques" : "/resources";
+  const backLink = resource.price > 0 && !isStudent ? "/fiches-pedagogiques" : "/lessons";
 
   return (
     <div className="min-h-screen bg-cream flex flex-col">
