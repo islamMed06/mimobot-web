@@ -75,24 +75,24 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold">Emploi du temps</h2>
+      <div className="sticker rounded-2xl p-6 mb-10">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="font-display text-xl font-bold text-ink flex items-center gap-2">
+            <i className="fa-solid fa-calendar-days text-sun"></i> Emploi du temps
+          </h2>
           <div className="flex items-center gap-2">
             {editing ? (
               <>
                 <button onClick={() => { setEditing(false); fetch("/api/admin/schedule").then(r => r.json()).then(d => setSchedule(d.schedule)); }}
-                  className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
-                  Annuler
-                </button>
+                  className="btn-outline text-xs !py-2 !px-4">Annuler</button>
                 <button onClick={handleSave} disabled={saving}
-                  className="text-xs px-3 py-1.5 rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition-colors disabled:opacity-50">
-                  {saving ? "Sauvegarde..." : "Enregistrer"}
+                  className="btn-primary text-xs !py-2 !px-4" style={{ fontSize: "0.75rem", padding: "8px 16px" }}>
+                  {saving ? "Sauvegarde..." : <><i className="fa-regular fa-floppy-disk"></i> Enregistrer</>}
                 </button>
               </>
             ) : (
               <button onClick={() => setEditing(true)}
-                className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors inline-flex items-center gap-1">
+                className="btn-outline text-xs !py-2 !px-4">
                 <i className="fa-regular fa-pen-to-square"></i> Modifier
               </button>
             )}
@@ -100,58 +100,85 @@ export default function AdminDashboard() {
         </div>
 
         {loading ? (
-          <p className="text-gray-400 text-sm">Chargement...</p>
+          <div className="text-center py-12">
+            <div className="text-4xl mb-3 animate-pulse">📅</div>
+            <p className="font-display text-ink/40 text-lg">Chargement de l'emploi du temps...</p>
+          </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm border-collapse">
+            <div className="overflow-x-auto pb-2">
+              <table className="w-full text-sm" style={{ borderCollapse: "separate", borderSpacing: "6px" }}>
                 <thead>
                   <tr>
-                    <th className="border border-gray-200 bg-gray-50 p-2 text-left font-semibold text-gray-600 min-w-[80px]">Horaire</th>
+                    <th className="font-display font-bold text-ink/50 text-xs text-left px-3 py-2 min-w-[90px]">Horaire</th>
                     {DAYS.map((d) => (
-                      <th key={d} className="border border-gray-200 bg-gray-50 p-2 text-center font-semibold text-gray-600 min-w-[100px]">{d}</th>
+                      <th key={d} className="font-display font-bold text-ink text-xs text-center px-3 py-2 min-w-[100px] bg-sun-light rounded-xl border-2 border-ink">
+                        {d}
+                      </th>
                     ))}
-                    {editing && <th className="border border-gray-200 bg-gray-50 p-2 text-center font-semibold text-gray-400 w-[40px]"></th>}
+                    {editing && <th className="w-[40px]"></th>}
                   </tr>
                 </thead>
                 <tbody>
-                  {schedule.map((row, i) => (
-                    <tr key={i}>
-                      <td className="border border-gray-200 p-2 text-gray-500 font-medium text-xs whitespace-nowrap">{row.time}</td>
-                      {row.slots.map((cell, j) => (
-                        <td key={j} className="border border-gray-200 p-1 text-center">
-                          {editing ? (
-                            <input
-                              value={cell}
-                              onChange={(e) => updateCell(i, j, e.target.value)}
-                              placeholder="—"
-                              className="w-full text-xs text-center p-1 border border-gray-200 rounded focus:outline-none focus:border-blue-400 bg-transparent"
-                            />
-                          ) : (
-                            <span className={`text-xs ${cell ? "bg-blue-50 text-blue-700 font-medium px-2 py-1 rounded block" : "text-gray-300"}`}>
-                              {cell || "—"}
-                            </span>
-                          )}
+                  {schedule.map((row, i) => {
+                    const rotate = i % 2 === 0 ? "tilt-1" : "tilt-2";
+                    return (
+                      <tr key={i} className={rotate}>
+                        <td className="font-display font-bold text-ink bg-white rounded-xl border-2 border-ink px-3 py-3 text-xs text-center shadow-[2px_2px_0px_#1A1A2E]">
+                          {row.time}
                         </td>
-                      ))}
-                      {editing && (
-                        <td className="border border-gray-200 p-1 text-center">
-                          {schedule.length > 1 && (
-                            <button onClick={() => removeRow(i)} className="text-red-400 hover:text-red-600 text-xs" title="Supprimer ce créneau">
-                              <i className="fa-solid fa-xmark"></i>
-                            </button>
-                          )}
-                        </td>
-                      )}
-                    </tr>
-                  ))}
+                        {row.slots.map((cell, j) => {
+                          const level = cell.match(/^(\w+)/)?.[1] || "";
+                          const bgMap: Record<string, string> = {
+                            "1AM": "bg-mint-light border-mint text-mint",
+                            "2AM": "bg-blue-light border-blue text-blue",
+                            "3AM": "bg-sun-light border-sun text-ink",
+                            "4AM": "bg-coral-light border-coral text-coral",
+                          };
+                          const cellStyle = level ? bgMap[level] || "bg-blue-light border-blue text-blue" : "";
+                          return (
+                            <td key={j} className="p-1 text-center">
+                              {editing ? (
+                                <input
+                                  value={cell}
+                                  onChange={(e) => updateCell(i, j, e.target.value)}
+                                  placeholder="—"
+                                  className="w-full text-xs text-center p-2 border-2 border-ink rounded-xl bg-white focus:outline-none focus:shadow-[2px_2px_0px_#FFC857] focus:-translate-x-0.5 focus:-translate-y-0.5 transition-all font-display font-bold"
+                                />
+                              ) : (
+                                <span className={`text-xs font-display font-bold px-2 py-2 rounded-xl border-2 block min-h-[36px] flex items-center justify-center leading-tight ${cellStyle || "bg-cream border-2 border-transparent text-ink/20"}`}>
+                                  {cell || "—"}
+                                </span>
+                              )}
+                            </td>
+                          );
+                        })}
+                        {editing && (
+                          <td className="p-1 text-center">
+                            {schedule.length > 1 && (
+                              <button onClick={() => removeRow(i)} className="w-8 h-8 rounded-xl border-2 border-coral bg-coral-light text-coral hover:bg-coral hover:text-white transition-colors text-sm" title="Supprimer ce créneau">
+                                <i className="fa-solid fa-xmark"></i>
+                              </button>
+                            )}
+                          </td>
+                        )}
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
             {editing && (
-              <button onClick={addRow} className="mt-3 text-xs px-3 py-1.5 rounded-lg border border-dashed border-gray-300 text-gray-400 hover:text-gray-600 hover:border-gray-400 transition-colors inline-flex items-center gap-1">
-                <i className="fa-solid fa-plus"></i> Ajouter un créneau
-              </button>
+              <div className="flex justify-center mt-4 gap-3 flex-wrap">
+                <button onClick={addRow} className="btn-outline text-xs !py-2 !px-5">
+                  <i className="fa-solid fa-plus"></i> Ajouter un créneau
+                </button>
+              </div>
+            )}
+            {!editing && (
+              <p className="text-center mt-4 text-xs text-ink/30 font-display">
+                <i className="fa-regular fa-clock mr-1"></i> Cliquez sur "Modifier" pour mettre à jour votre emploi du temps
+              </p>
             )}
           </>
         )}
