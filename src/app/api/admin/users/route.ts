@@ -52,3 +52,27 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }
+
+export async function DELETE(req: NextRequest) {
+  if (!(await isAdminUser(req))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  try {
+    const { id } = await req.json();
+
+    // Delete profile first
+    await callSupabaseRest(`profiles?id=eq.${id}`, { method: "DELETE" });
+
+    // Delete auth user via Admin API
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/admin/users/${id}`, {
+      method: "DELETE",
+      headers: {
+        apikey: SERVICE_KEY,
+        Authorization: `Bearer ${SERVICE_KEY}`,
+      },
+    });
+    if (!res.ok) { const e = await res.text(); throw new Error(e); }
+
+    return NextResponse.json({ ok: true });
+  } catch (e: any) {
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
+}

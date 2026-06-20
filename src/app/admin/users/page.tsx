@@ -26,6 +26,16 @@ export default function AdminUsersPage() {
     fetchUsers();
   };
 
+  const deleteUser = async (user: any) => {
+    if (!confirm(`Supprimer définitivement ${user.email} ?\n\nToutes ses données (auth + profil) seront effacées.`)) return;
+    await fetch("/api/admin/users", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: user.id }),
+    });
+    fetchUsers();
+  };
+
   if (loading) return <p className="text-ink/60">Chargement...</p>;
 
   return (
@@ -76,18 +86,28 @@ export default function AdminUsersPage() {
                 </td>
                 <td className="p-3 text-center text-ink/50 text-xs">{new Date(u.created_at).toLocaleDateString()}</td>
                 <td className="p-3 text-center">
-                  {u.role !== "admin" && u.user_type !== "student" && (
-                    <button
-                      onClick={() => togglePremium(u)}
-                      className={`font-display font-bold text-xs px-4 py-1.5 rounded-full border-2 border-ink transition-all cursor-pointer ${
-                        u.role === "premium"
-                          ? "bg-coral text-white hover:bg-coral-light hover:text-ink"
-                          : "bg-mint text-white hover:bg-mint-light hover:text-ink"
-                      }`}
-                    >
-                      {u.role === "premium" ? "Rétrograder" : "Passer Premium"}
-                    </button>
-                  )}
+                  <div className="flex items-center justify-center gap-2">
+                    {u.role !== "admin" && u.user_type !== "student" && (
+                      <button
+                        onClick={() => togglePremium(u)}
+                        className={`font-display font-bold text-xs px-4 py-1.5 rounded-full border-2 border-ink transition-all cursor-pointer ${
+                          u.role === "premium"
+                            ? "bg-coral text-white hover:bg-coral-light hover:text-ink"
+                            : "bg-mint text-white hover:bg-mint-light hover:text-ink"
+                        }`}
+                      >
+                        {u.role === "premium" ? "Rétrograder" : "Passer Premium"}
+                      </button>
+                    )}
+                    {u.role !== "admin" && (
+                      <button
+                        onClick={() => deleteUser(u)}
+                        className="font-display font-bold text-xs px-3 py-1.5 rounded-full border-2 border-coral/50 text-coral hover:bg-coral hover:text-white transition-all cursor-pointer"
+                      >
+                        <i className="fa-solid fa-trash-can"></i>
+                      </button>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}
