@@ -6,11 +6,11 @@ import { createClient } from "@/lib/supabase";
 
 const links = [
   { href: "/admin", label: "Dashboard", icon: "D" },
-  { href: "/admin/lessons", label: "Leçons", icon: "L" },
-  { href: "/admin/exercises", label: "Exercices", icon: "E" },
-  { href: "/admin/resources", label: "Fiches pédagogiques", icon: "F" },
-  { href: "/admin/users", label: "Utilisateurs", icon: "U" },
-  { href: "/admin/profile", label: "Profil", icon: "P" },
+  { href: "/admin/lessons", label: "Lessons", icon: "L" },
+  { href: "/admin/exercises", label: "Exercises", icon: "E" },
+  { href: "/admin/resources", label: "Resources", icon: "F" },
+  { href: "/admin/users", label: "Users", icon: "U" },
+  { href: "/admin/profile", label: "Profile", icon: "P" },
 ];
 
 export default function AdminSidebar({ onNavigate }: { onNavigate: () => void }) {
@@ -29,7 +29,7 @@ export default function AdminSidebar({ onNavigate }: { onNavigate: () => void })
         <Link href="/admin" className="text-lg font-bold" onClick={onNavigate}>
           MimoBot
         </Link>
-        <p className="text-xs text-gray-400 mt-0.5">Panneau d&apos;administration</p>
+        <p className="text-xs text-gray-400 mt-0.5">Admin Panel</p>
       </div>
 
       <nav className="flex-1 p-2 space-y-1">
@@ -66,10 +66,10 @@ export default function AdminSidebar({ onNavigate }: { onNavigate: () => void })
           onClick={handleLogout}
           className="w-full text-left px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors mt-1"
         >
-          Déconnexion
+          Log out
         </button>
         <Link href="/" className="block px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-colors">
-          ← Retour au site
+          ← Back to site
         </Link>
       </div>
     </aside>
