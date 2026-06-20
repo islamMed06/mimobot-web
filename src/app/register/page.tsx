@@ -28,14 +28,7 @@ export default function RegisterPage() {
     const data = await res.json();
 
     if (!res.ok) {
-      const msg = data.error;
-      setError(
-        msg?.includes("already exists") || msg?.includes("already registered")
-          ? "Cet email est déjà inscrit"
-          : msg?.includes("Password should be at least 6 characters")
-            ? "Le mot de passe doit faire au moins 6 caractères"
-            : "Erreur lors de l'inscription"
-      );
+      setError(data.error || "Erreur lors de l'inscription");
       setLoading(false);
       return;
     }

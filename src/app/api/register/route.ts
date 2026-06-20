@@ -4,7 +4,9 @@ const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const SERVICE_KEY = process.env.SUPABASE_KEY!;
 
 async function callSupabase(path: string, options?: RequestInit) {
-  const res = await fetch(`${SUPABASE_URL}${path}`, {
+  const url = `${SUPABASE_URL}${path}`;
+  console.log(`[register] calling ${url}`);
+  const res = await fetch(url, {
     ...options,
     headers: {
       apikey: SERVICE_KEY,
@@ -13,7 +15,11 @@ async function callSupabase(path: string, options?: RequestInit) {
       ...options?.headers,
     },
   });
-  if (!res.ok) { const e = await res.text(); throw new Error(e); }
+  if (!res.ok) {
+    const text = await res.text();
+    console.error(`[register] ${url} failed (${res.status}): ${text}`);
+    throw new Error(text);
+  }
   return res;
 }
 
