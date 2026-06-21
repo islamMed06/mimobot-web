@@ -87,7 +87,7 @@ export default function PremiumPage() {
               <div>
                 <label className="block text-xs font-display font-bold text-ink/50 uppercase tracking-wide mb-1">Compte</label>
                 <p className={`inline-flex items-center gap-2 font-display text-sm font-bold px-4 py-2 rounded-xl border-2 border-ink ${
-                  isAdmin ? "bg-ink text-cream" : isPremium ? "bg-mint-light text-mint" : "bg-sun-light text-ink"
+                  isAdmin ? "bg-sun text-ink" : isPremium ? "bg-mint-light text-mint" : "bg-sun-light text-ink"
                 }`}>
                   <i className={`fa-solid ${isAdmin || isPremium ? "fa-crown" : "fa-user"}`}></i>
                   {isAdmin ? "Admin" : isPremium ? "Premium" : "Gratuit"}
