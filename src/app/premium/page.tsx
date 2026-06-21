@@ -46,7 +46,8 @@ export default function PremiumPage() {
     </div>
   );
 
-  const isPremium = profile?.role === "premium";
+  const isAdmin = profile?.role === "admin";
+  const isPremium = profile?.role === "premium" || isAdmin;
   const isFreeTeacher = !isPremium && profile?.user_type === "teacher";
   const userTypeLabel = profile?.user_type === "teacher" ? "Professeur" : profile?.user_type === "student" ? "Élève" : null;
 
@@ -86,10 +87,10 @@ export default function PremiumPage() {
               <div>
                 <label className="block text-xs font-display font-bold text-ink/50 uppercase tracking-wide mb-1">Compte</label>
                 <p className={`inline-flex items-center gap-2 font-display text-sm font-bold px-4 py-2 rounded-xl border-2 border-ink ${
-                  isPremium ? "bg-mint-light text-mint" : "bg-sun-light text-ink"
+                  isAdmin ? "bg-ink text-cream" : isPremium ? "bg-mint-light text-mint" : "bg-sun-light text-ink"
                 }`}>
-                  <i className={`fa-solid ${isPremium ? "fa-crown" : "fa-user"}`}></i>
-                  {isPremium ? "Premium" : "Gratuit"}
+                  <i className={`fa-solid ${isAdmin || isPremium ? "fa-crown" : "fa-user"}`}></i>
+                  {isAdmin ? "Admin" : isPremium ? "Premium" : "Gratuit"}
                 </p>
               </div>
             </div>
