@@ -137,22 +137,7 @@ export default function PremiumPage() {
           </div>
 
           {/* Contenu premium / gratuit */}
-          {isPremium ? (
-            <div className="sticker rounded-2xl p-8 bg-mint-light">
-              <h2 className="font-display text-xl font-bold text-ink mb-4">
-                <i className="fa-solid fa-crown text-mint mr-2"></i> Contenus Premium
-              </h2>
-              <p className="text-ink/70 mb-6">Tu as accès à tous les contenus premium. Visite les pages ci-dessous :</p>
-              <div className="flex flex-wrap gap-4">
-                <Link href="/lessons" className="btn-primary">
-                  <i className="fa-solid fa-book-open"></i> Leçons
-                </Link>
-                <Link href="/exercises" className="btn-primary">
-                  <i className="fa-solid fa-pen"></i> Exercices
-                </Link>
-              </div>
-            </div>
-          ) : isFreeTeacher ? (
+          {!isPremium && isFreeTeacher ? (
             <div className="sticker rounded-2xl p-8 bg-sun-light">
               <h2 className="font-display text-xl font-bold text-ink mb-4">
                 <i className="fa-solid fa-lock text-coral mr-2"></i> Compte Gratuit
